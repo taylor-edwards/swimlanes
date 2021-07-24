@@ -1,0 +1,38 @@
+.lane {
+  display: flex;
+  grid-gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 20px 40px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 15px;
+}
+
+.name {
+  min-width: 140px;
+}
+
+.count {
+  flex-grow: 1;
+  opacity: 0.8;
+}
+
+.note {
+  max-width: 250px;
+}
+
+.card {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.inputs {
+  display: flex;
+  grid-gap: 10px;
+}

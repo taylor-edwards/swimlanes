@@ -1,7 +1,10 @@
+import { StoreProvider } from '../store'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }) => (
+  <StoreProvider>
+    <Component {...pageProps} />
+  </StoreProvider>
+)
 
-export default MyApp
+export default App

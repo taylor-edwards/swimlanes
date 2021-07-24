@@ -1,0 +1,23 @@
+.container {
+  overflow: auto;
+  position: relative;
+}
+
+.lanes {
+  display: flex;
+  flex-direction: column;
+}
+
+.lane {
+  border: 0 solid #aaa;
+  border-bottom-width: 1px;
+  flex-grow: 1;
+}
+
+.lane:first-child {
+  border-top-width: 1px;
+}
+
+.card {
+  padding: 30px 40px 60px;
+}
