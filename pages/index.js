@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useMessage } from '../store'
 import Lanes from '../components/Lanes'
 import Tags from '../components/Tags'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 const Home = () => {
   const [message, setMessage] = useMessage()

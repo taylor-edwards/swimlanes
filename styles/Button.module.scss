@@ -1,0 +1,25 @@
+.btn {
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  padding: 7px 20px 8px;
+  outline: 0;
+  white-space: nowrap;
+}
+
+.default {
+  background: #efefef;
+  border: 1px solid #ff6347;
+  color: black;
+}
+
+.emphasis {
+  background: #ff6347;
+  color: white;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #f05337;
+  color: white;
+}

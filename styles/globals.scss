@@ -25,17 +25,13 @@ a {
 
 button {
   appearance: none;
-  background: #ff6347;
   border: 0;
-  border-radius: 3px;
-  color: white;
   cursor: pointer;
-  letter-spacing: 0.03em;
-  padding: 7px 20px 8px;
-  white-space: nowrap;
 }
 
-button:hover,
-button:focus {
-  background: #f05337;
+input,
+textarea {
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
 }

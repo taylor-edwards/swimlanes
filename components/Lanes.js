@@ -1,6 +1,7 @@
 import { useLaneOrder } from '../store'
+import Button from './Button'
 import Lane from './Lane'
-import styles from '../styles/Lanes.module.css'
+import styles from '../styles/Lanes.module.scss'
 
 const Lanes = ({ className, ...props }) => {
   const [lanes, setOrder, addLane] = useLaneOrder()
@@ -13,13 +14,9 @@ const Lanes = ({ className, ...props }) => {
       </div>
 
       <div className={styles.card}>
-        <button
-          onClick={() => addLane()}
-          title="Add lane"
-          className={styles.addLaneBtn}
-        >
+        <Button onClick={() => addLane()} type="emphasis">
           Add lane
-        </button>
+        </Button>
       </div>
     </div>
   )

@@ -64,17 +64,29 @@ const initialState = {
     },
     N004: {
       id: 'N004',
-      name: 'asdf',
-      description: 'nondescript',
+      name: 'oops I did it again',
+      description: undefined,
       laneID: 'L001',
       tags: [],
     },
   },
   tags: {
-    T000: 'cooking',
-    T001: 'dev',
-    T002: 'motorcycles',
-    T003: 'catgif',
+    T000: {
+      name: 'cooking',
+      relatedNotes: ['N003'],
+    },
+    T001: {
+      name: 'dev',
+      relatedNotes: ['N001'],
+    },
+    T002: {
+      name: 'motorcycles',
+      relatedNotes: ['N000', 'N002'],
+    },
+    T003: {
+      name: 'catgif',
+      relatedNotes: ['N000', 'N001'],
+    },
   },
 }
 
@@ -231,30 +243,32 @@ const tagReducers = {
     },
   }),
   [actions.DELETE_TAG]: (state, { tagID }) => {
-    const tag = selectors.tag(tagID)
+    const tag = selectors.tag(tagID, state)
     return {
       ...state,
       notes: merge(
         state.notes,
-        tag.relatedNotes.map(noteID => {
-          const note = selectors.note(noteID, state)
-          return {
-            ...note,
-            tags: rejectEquals(note.tags, tagID),
+        Object.fromEntries(
+          tag.relatedNotes.map(noteID => {
+            const note = selectors.note(noteID, state)
+            return [noteID, {
+              ...note,
+              tags: rejectEquals(note.tags, tagID),
+            }]
           }
-        }),
+        )),
       ),
       tags: omit(state.tags, tagID),
     }
   },
   [actions.APPLY_TAG]: (state, { tagID, relatedNotes }) => {
-    const tag = selectors.tag(tagID)
+    const tag = selectors.tag(tagID, state)
     return {
       ...state,
       notes: merge(
         state.notes,
         relatedNotes.map(noteID => {
-          const note = selectors.note(noteID)
+          const note = selectors.note(noteID, state)
           return {
             ...note,
             tags: note.tags.concat([tagID]),
@@ -271,18 +285,20 @@ const tagReducers = {
     }
   },
   [actions.REMOVE_TAG]: (state, { tagID, relatedNotes }) => {
-    const tag = selectors.tag(tagID)
+    const tag = selectors.tag(tagID, state)
     return {
       ...state,
       notes: {
         ...state.notes,
-        ...relatedNotes.map(noteID => {
-          const note = selectors.note(noteID)
-          return {
-            ...note,
-            tags: rejectEquals(note.tags, tagID),
+        ...Object.fromEntries(
+          relatedNotes.map(noteID => {
+            const note = selectors.note(noteID, state)
+            return [noteID, {
+              ...note,
+              tags: rejectEquals(note.tags, tagID),
+            }]
           }
-        }),
+        )),
       },
       tags: {
         ...state.tags,

@@ -1,3 +1,5 @@
+export const noop = () => {}
+
 export const insert = (arr, item, index = Infinity) => [
   ...arr.slice(0, index),
   item,

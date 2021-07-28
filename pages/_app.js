@@ -1,5 +1,5 @@
 import { StoreProvider } from '../store'
-import '../styles/globals.css'
+import '../styles/globals.scss'
 
 const App = ({ Component, pageProps }) => (
   <StoreProvider>

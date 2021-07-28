@@ -1,11 +1,21 @@
 import { useTag } from '../store'
-import styles from '../styles/Tag.module.css'
+import styles from '../styles/Tag.module.scss'
 
-const Tag = ({ className, id }) => {
-  const [tag, addTag, applyTag, removeTag] = useTag(id)
+const Tag = ({ className, id, noteID }) => {
+  const [tag, addTag, applyTag, removeTag, deleteTag] = useTag(id)
+  const handleDelete = () => {
+    if (noteID) {
+      removeTag([noteID])
+    } else {
+      deleteTag()
+    }
+  }
   return (
     <span className={[styles.tag, className].join(' ')}>
-      #{tag}
+      <button onClick={handleDelete} title="Delete tag">
+        <span role="none" aria-hidden="true">&times;</span>
+      </button>
+      #{tag.name}
     </span>
   )
 }

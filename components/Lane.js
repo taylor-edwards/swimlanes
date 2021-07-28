@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLane, useNoteOrder } from '../store'
+import Button from './Button'
+import Input from './Input'
 import Note from './Note'
-import styles from '../styles/Lane.module.css'
+import styles from '../styles/Lane.module.scss'
 
 const Lane = ({ className, id, ...props }) => {
   const [lane, setLane, moveLane, deleteLane, addNote] = useLane(id)
@@ -9,12 +11,16 @@ const Lane = ({ className, id, ...props }) => {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(lane.name)
   const nameElement = useRef(null)
+  const editElement = useRef(null)
 
+  // transfer focus upon first rerender whenever editing mode is toggled
   useEffect(() => {
     if (editing && nameElement) {
       nameElement.current.focus()
+    } else if (editElement) {
+      editElement.current.focus()
     }
-  }, [editing])
+  }, [editing, nameElement, editElement])
 
   const handleSave = () => {
     if (name.length !== 0) {
@@ -36,10 +42,6 @@ const Lane = ({ className, id, ...props }) => {
         {!editing && (
           <h3
             className={styles.name}
-            tabIndex={1}
-            role="button"
-            title="Click to edit"
-            onClick={() => setEditing(true)}
           >
             {lane.name}
           </h3>
@@ -47,30 +49,48 @@ const Lane = ({ className, id, ...props }) => {
 
         {editing && (
           <div className={styles.inputs}>
-            <input
+            <Input
               type="text"
               ref={nameElement}
               value={name}
-              onChange={e => setName(e.currentTarget.value)}
+              onInput={setName}
+              onEnter={handleSave}
+              onEsc={handleCancel}
+              ignoreShiftKey
             />
-            <button onClick={handleCancel}>Cancel</button>
-            <button onClick={handleSave}>Save</button>
           </div>
         )}
 
         <p className={styles.count}>
           {lane.noteOrder.length} note{lane.noteOrder.length === 1 ? '' : 's'}
         </p>
+
         <div className={styles.controls}>
-          <button onClick={handleDelete}>Delete lane</button>
+          {!editing && (
+            <Button
+              onClick={() => setEditing(true)}
+              ref={editElement}
+            >
+              Edit
+            </Button>
+          )}
+
+          {editing && (
+            <>
+              <Button onClick={handleDelete}>Delete</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
+              <Button onClick={handleSave} type="emphasis">Save</Button>
+            </>
+          )}
         </div>
       </div>
+
       {notes.map(noteID => (
         <Note key={noteID} id={noteID} className={styles.note} />
       ))}
       
       <div className={styles.card}>
-        <button onClick={handleCreate}>Add note</button>
+        <Button onClick={handleCreate} type="emphasis">Add note</Button>
       </div>
     </div>
   )

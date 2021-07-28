@@ -32,7 +32,12 @@
   padding: 0 16px;
 }
 
-.inputs {
+.controls {
   display: flex;
+  flex-wrap: wrap;
   grid-gap: 10px;
+}
+
+.controls > button {
+  flex-grow: 1;
 }
