@@ -1,7 +1,7 @@
 import { useTag } from '../store'
 import styles from '../styles/Tag.module.scss'
 
-const Tag = ({ className, id, noteID }) => {
+const Tag = ({ className = '', id, noteID }) => {
   const [tag, addTag, applyTag, removeTag, deleteTag] = useTag(id)
   const handleDelete = () => {
     if (noteID) {

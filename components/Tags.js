@@ -2,7 +2,7 @@ import { useTags } from '../store'
 import Tag from './Tag'
 import styles from '../styles/Tags.module.scss'
 
-const Tags = ({ className }) => {
+const Tags = ({ className = '' }) => {
   const [tags] = useTags()
   return (
     <div className={[styles.tags, className].join(' ')}>

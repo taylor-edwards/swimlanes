@@ -14,29 +14,25 @@ const useLens = (selector, ...actionCreators) => {
   ]
 }
 
-export const useMessage = () => useLens(
-  selectors.message,
-  actions.setMessage,
-)
-
 export const useLaneOrder = () => useLens(
   selectors.laneOrder,
-  actions.setLaneOrder,
   actions.addLane,
+  actions.moveLane,
+  actions.setLaneOrder,
 )
 
 export const useLane = id => useLens(
   selectors.lane.bind(null, id),
   actions.setLane.bind(null, id),
-  actions.moveLane.bind(null, id),
   actions.deleteLane.bind(null, id),
   actions.addNote.bind(null, id),
 )
 
 export const useNoteOrder = laneID => useLens(
   selectors.noteOrder.bind(null, laneID),
-  actions.setNoteOrder.bind(null, laneID),
   actions.addNote.bind(null, laneID),
+  actions.moveNote.bind(null, laneID),
+  actions.setNoteOrder.bind(null, laneID),
 )
 
 export const useNote = id => useLens(
@@ -53,4 +49,9 @@ export const useTag = id => useLens(
   actions.applyTag.bind(null, id),
   actions.removeTag.bind(null, id),
   actions.deleteTag.bind(null, id),
-) 
+)
+
+export const useDragAndDrop = () => useLens(
+  selectors.dragAndDrop,
+  actions.setDragItem,
+)

@@ -7,9 +7,9 @@ const styleTypes = {
 }
 
 const Button = forwardRef(
-  ({ children, className, type = 'default', ...props }, ref) => (
+  ({ children, className = '', type = 'default', ...props }, ref) => (
     <button
-      className={[styles.btn, styleTypes[type]].join(' ')}
+      className={[styles.btn, styleTypes[type], className].join(' ')}
       {...props}
       ref={ref}
     >

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNote } from '../store'
 import Button from './Button'
+import DragTarget from './DragTarget'
 import Input from './Input'
 import Tag from './Tag'
 import styles from '../styles/Note.module.scss'
 
-const Note = ({ className, id }) => {
+const Note = ({ className = '', id, laneID }) => {
   const [note, setNote, deleteNote] = useNote(id)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(note.name)
@@ -40,13 +41,23 @@ const Note = ({ className, id }) => {
     }
   }
 
+  const noteElement = useRef(null)
+  const setDragImage = e =>
+    e.dataTransfer.setDragImage(noteElement.current, 0, 0)
+
   return (
-    <div className={[styles.note, className].join(' ')}>
-      <h4>
+    <div className={[styles.note, className].join(' ')} ref={noteElement}>
+      <div className={styles.header}>
         {!editing && (
-          <strong>
-            {note.name ?? 'Untitled note'}
-          </strong>
+          <>
+            <h4 className={styles.name}>{note.name ?? 'Untitled note'}</h4>
+            <DragTarget
+              item={{ laneID, noteID: id }}
+              label="Move note"
+              onDragStart={setDragImage}
+              type="NOTE"
+            />
+          </>
         )}
         {editing && (
           <Input
@@ -58,7 +69,7 @@ const Note = ({ className, id }) => {
             onEsc={handleCancel}
           />
         )}
-      </h4>
+      </div>
 
       {!editing && (
         <p className={styles.description}>{note.description}</p>
@@ -88,17 +99,17 @@ const Note = ({ className, id }) => {
 
         {editing && (
           <>
-            <Button onClick={handleDelete} className={styles.deleteBtn}>
+            <Button onClick={handleDelete} className={styles.btn}>
               Delete
             </Button>
 
-            <Button onClick={handleCancel} className={styles.cancelBtn}>
+            <Button onClick={handleCancel} className={styles.btn}>
               Cancel
             </Button>
 
             <Button
               onClick={handleSave}
-              className={styles.saveBtn}
+              className={styles.btn}
               type="emphasis"
             >
               Save

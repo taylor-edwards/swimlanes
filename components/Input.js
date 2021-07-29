@@ -3,7 +3,7 @@ import { noop } from '../util'
 import styles from '../styles/Input.module.scss'
 
 const Input = forwardRef(({
-  className,
+  className = '',
   type,
   value,
   onChange = noop,

@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLane, useNoteOrder } from '../store'
 import Button from './Button'
+import DragTarget from './DragTarget'
+import DropZone from './DropZone'
 import Input from './Input'
 import Note from './Note'
 import styles from '../styles/Lane.module.scss'
 
-const Lane = ({ className, id, ...props }) => {
-  const [lane, setLane, moveLane, deleteLane, addNote] = useLane(id)
-  const [notes, setNoteOrder] = useNoteOrder(id)
+const Lane = ({ className = '', id }) => {
+  const [lane, setLane, deleteLane] = useLane(id)
+  const [notes, addNote, moveNote, setNoteOrder] = useNoteOrder(id)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(lane.name)
   const nameElement = useRef(null)
@@ -33,22 +35,31 @@ const Lane = ({ className, id, ...props }) => {
     setEditing(false)
   }
   const handleCreate = () => addNote()
-  // TODO: show a confirmation modal (notes will be deleted)
   const handleDelete = () => deleteLane()
 
-  return (
-    <div className={[styles.lane, className].join(' ')} {...props}>
-      <div className={styles.header}>
-        {!editing && (
-          <h3
-            className={styles.name}
-          >
-            {lane.name}
-          </h3>
-        )}
+  const laneElement = useRef(null)
+  const setDragImage = e =>
+    e.dataTransfer.setDragImage(laneElement.current, 0, 0)
+  const handleDrop = index => ({ noteID, laneID }) =>
+    moveNote(laneID, noteID, index)
 
-        {editing && (
-          <div className={styles.inputs}>
+  return (
+    <div className={[styles.lane, className].join(' ')} ref={laneElement}>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          {!editing && (
+            <>
+              <h3 className={styles.name}>{lane.name}</h3>
+              <DragTarget
+                item={id}
+                label="Move lane"
+                onDragStart={setDragImage}
+                type="LANE"
+              />
+            </>
+          )}
+
+          {editing && (
             <Input
               type="text"
               ref={nameElement}
@@ -58,8 +69,8 @@ const Lane = ({ className, id, ...props }) => {
               onEsc={handleCancel}
               ignoreShiftKey
             />
-          </div>
-        )}
+          )}
+        </div>
 
         <p className={styles.count}>
           {lane.noteOrder.length} note{lane.noteOrder.length === 1 ? '' : 's'}
@@ -85,13 +96,25 @@ const Lane = ({ className, id, ...props }) => {
         </div>
       </div>
 
-      {notes.map(noteID => (
-        <Note key={noteID} id={noteID} className={styles.note} />
+      {notes.map((noteID, i) => (
+        <DropZone
+          key={noteID}
+          type="NOTE"
+          label="Move note"
+          onDrop={handleDrop(i)}
+        >
+          <Note id={noteID} laneID={id} className={styles.note} />
+        </DropZone>
       ))}
       
-      <div className={styles.card}>
+      <DropZone
+        type="NOTE"
+        label="Move note"
+        onDrop={handleDrop(notes.length)}
+        className={styles.card}
+      >
         <Button onClick={handleCreate} type="emphasis">Add note</Button>
-      </div>
+      </DropZone>
     </div>
   )
 }

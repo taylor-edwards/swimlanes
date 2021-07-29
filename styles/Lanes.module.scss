@@ -1,7 +1,4 @@
-.container {
-  overflow: auto;
-  position: relative;
-}
+.container {}
 
 .lanes {
   display: flex;
@@ -9,13 +6,12 @@
 }
 
 .lane {
-  border: 0 solid #aaa;
-  border-bottom-width: 1px;
+  border-bottom: 1px solid #aaa;
   flex-grow: 1;
 }
 
 .lane:first-child {
-  border-top-width: 1px;
+  border-top: 1px solid #aaa;
 }
 
 .card {

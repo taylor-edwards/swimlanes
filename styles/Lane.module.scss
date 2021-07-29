@@ -6,10 +6,14 @@
   padding: 20px 40px;
 }
 
-.header {
+.content {
   display: flex;
   flex-direction: column;
   padding: 10px 0 15px;
+}
+
+.header {
+  display: flex;
 }
 
 .name {
@@ -22,6 +26,8 @@
 }
 
 .note {
+  box-sizing: border-box;
+  height: 100%;
   max-width: 250px;
 }
 

@@ -3,7 +3,6 @@ import * as actions from './actions'
 import * as selectors from './selectors'
 
 const initialState = {
-  message: 'Hello, world!',
   lanes: {
     L000: {
       id: 'L000',
@@ -88,6 +87,9 @@ const initialState = {
       relatedNotes: ['N000', 'N001'],
     },
   },
+  dragAndDrop: {
+    heldItem: null,
+  },
 }
 
 const createLane = (id, name = 'New lane', noteOrder = []) => ({
@@ -115,10 +117,6 @@ const createTag = (id, name = 'New tag', relatedNotes = []) => ({
   name,
   relatedNotes,
 })
-
-const messageReducers = {
-  [actions.SET_MESSAGE]: (state, { message }) => ({ ...state, message }),
-}
 
 const laneReducers = {
   [actions.SET_LANE_ORDER]: (state, { laneOrder }) => ({ ...state, laneOrder }),
@@ -210,19 +208,36 @@ const noteReducers = {
   ) => {
     const fromLane = selectors.lane(fromLaneID, state)
     const toLane = selectors.lane(toLaneID, state)
-    return {
-      ...state,
-      lanes: {
-        ...state.lanes,
-        [fromLaneID]: {
-          ...fromLane,
-          noteOrder: rejectEquals(fromLane.noteOrder, noteID),
+    if (fromLaneID === toLaneID) {
+      return {
+        ...state,
+        lanes: {
+          ...state.lanes,
+          [toLaneID]: {
+            ...toLane,
+            noteOrder: insert(
+              rejectEquals(toLane.noteOrder, noteID),
+              noteID,
+              toIndex,
+            ),
+          },
         },
-        [toLaneID]: {
-          ...toLane,
-          noteOrder: insert(toLane.noteOrder, noteID, toIndex),
+      }
+    } else {
+      return {
+        ...state,
+        lanes: {
+          ...state.lanes,
+          [fromLaneID]: {
+            ...fromLane,
+            noteOrder: rejectEquals(fromLane.noteOrder, noteID),
+          },
+          [toLaneID]: {
+            ...toLane,
+            noteOrder: insert(toLane.noteOrder, noteID, toIndex),
+          },
         },
-      },
+      }
     }
   },
   [actions.SET_NOTE]: (state, { noteID, note }) => ({
@@ -311,11 +326,21 @@ const tagReducers = {
   },
 }
 
+const dragAndDropReducers = {
+  [actions.SET_DRAG_ITEM]: (state, { heldItem = null, itemType = null }) => ({
+    ...state,
+    dragAndDrop: {
+      itemType,
+      heldItem,
+    }
+  }),
+}
+
 const allReducers = {
-  ...messageReducers,
   ...laneReducers,
   ...noteReducers,
   ...tagReducers,
+  ...dragAndDropReducers,
 }
 
 export const rootReducer = (state = initialState, action) => {

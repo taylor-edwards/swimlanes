@@ -1,0 +1,60 @@
+.draggable {
+  cursor: grab;
+  font-size: 24px;
+  line-height: 0.8;
+  opacity: 0.8;
+}
+
+.draggable:hover {
+  color: #ff6347;
+  opacity: 1;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.dropzone {
+  position: relative;
+}
+
+.hovering {
+}
+
+.hovering:before {
+  background: #88abff;
+  border: 2px solid #6a90ff;
+  box-sizing: border-box;
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.hovering:after {
+  background: #8cbaff;
+  border-radius: 3px;
+  color: #000;
+  content: attr(data-label);
+  left: 50%;
+  margin: -3px 15px;
+  padding: 3px 12px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.hovering * {
+  pointer-events: none;
+}

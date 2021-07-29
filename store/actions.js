@@ -1,6 +1,3 @@
-export const SET_MESSAGE = 'SET_MESSAGE'
-export const setMessage = message => ({ message, type: SET_MESSAGE })
-
 export const SET_LANE_ORDER = 'SET_LANE_ORDER'
 export const setLaneOrder = laneOrder => ({ laneOrder, type: SET_LANE_ORDER })
 
@@ -41,11 +38,11 @@ export const DELETE_NOTE = 'DELETE_NOTE'
 export const deleteNote = noteID => ({ noteID, type: DELETE_NOTE })
 
 export const MOVE_NOTE = 'MOVE_NOTE'
-export const moveNote = (noteID, fromLaneID, toLaneID, toIndex) => ({
-  noteID,
+export const moveNote = (toLaneID, fromLaneID, noteID, toIndex) => ({
   fromLaneID,
-  toLaneID,
+  noteID,
   toIndex,
+  toLaneID,
   type: MOVE_NOTE,
 })
 
@@ -76,3 +73,10 @@ export const removeTag = (tagID, relatedNotes) => ({
 
 export const DELETE_TAG = 'DELETE_TAG'
 export const deleteTag = tagID => ({ tagID, type: DELETE_TAG })
+
+export const SET_DRAG_ITEM = 'SET_DRAG_ITEM'
+export const setDragItem = (itemType, heldItem) => ({
+  itemType,
+  heldItem,
+  type: SET_DRAG_ITEM,
+})
