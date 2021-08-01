@@ -55,3 +55,15 @@ export const useDragAndDrop = () => useLens(
   selectors.dragAndDrop,
   actions.setDragItem,
 )
+
+export const useCache = () => useLens(
+  selectors.lastExport,
+  actions.exportCache,
+  actions.restoreCache,
+)
+
+export const useUndoRedo = () => useLens(
+  selectors.undoRedo,
+  actions.undo,
+  actions.redo,
+)

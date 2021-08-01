@@ -1,8 +1,9 @@
 import { insert, merge, omit, omitWhen, rejectEquals, uniq } from '../util'
 import * as actions from './actions'
 import * as selectors from './selectors'
+import { undoableActions } from './middleware'
 
-const initialState = {
+export const initialState = {
   lanes: {
     L000: {
       id: 'L000',
@@ -89,6 +90,14 @@ const initialState = {
   },
   dragAndDrop: {
     heldItem: null,
+  },
+  lastExport: {
+    size: null,
+    timestamp: null,
+  },
+  undoRedo: {
+    undoCount: 0,
+    redoCount: 0,
   },
 }
 
@@ -336,16 +345,62 @@ const dragAndDropReducers = {
   }),
 }
 
+const restoreState = (state, { restoredState = {}, undoCount, redoCount }) => ({
+  ...state,
+  ...restoredState,
+  undoRedo: {
+    ...state.undoRedo,
+    undoCount,
+    redoCount,
+  },
+})
+const undoRedoReducers = {
+  [actions.UNDO]: restoreState,
+  [actions.REDO]: restoreState,
+}
+
+const cacheReducers = {
+  [actions.EXPORT_CACHE]: (state, { timestamp = null, size = null }) => ({
+    ...state,
+    lastExport: {
+      size,
+      timestamp,
+    },
+  }),
+  [actions.RESTORE_CACHE]: (state, { cachedState }) => ({
+    ...state,
+    ...cachedState,
+  }),
+}
+
 const allReducers = {
   ...laneReducers,
   ...noteReducers,
   ...tagReducers,
   ...dragAndDropReducers,
+  ...undoRedoReducers,
+  ...cacheReducers,
 }
 
 export const rootReducer = (state = initialState, action) => {
+  let nextState = state
+
+  // handle general case reducers
   if (allReducers.hasOwnProperty(action.type)) {
-    return allReducers[action.type](state, action)
+     nextState = allReducers[action.type](nextState, action)
   }
-  return state
+
+  // special handling for global undo/redo
+  if (undoableActions.indexOf(action.type) !== -1) {
+    nextState = {
+      ...nextState,
+      undoRedo: {
+        ...nextState.undoRedo,
+        redoCount: action.redoCount ?? nextState.redoCount,
+        undoCount: action.undoCount ?? nextState.undoCount,
+      },
+    }
+  }
+
+  return nextState
 }

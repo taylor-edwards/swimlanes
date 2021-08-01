@@ -3,7 +3,7 @@
   grid-gap: 20px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 20px 40px;
+  padding: 20px;
 }
 
 .content {
@@ -46,4 +46,10 @@
 
 .controls > button {
   flex-grow: 1;
+}
+
+@media (min-width: 768px) {
+  .lane {
+    padding: 20px 40px;
+  }
 }

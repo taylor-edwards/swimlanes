@@ -80,3 +80,31 @@ export const setDragItem = (itemType, heldItem) => ({
   heldItem,
   type: SET_DRAG_ITEM,
 })
+
+export const EXPORT_CACHE = 'EXPORT_CACHE'
+export const exportCache = () => ({
+  format: 'json',
+  type: EXPORT_CACHE,
+})
+
+export const RESTORE_CACHE ='RESTORE_CACHE'
+export const restoreCache = () => ({
+  cachedState: null,
+  type: RESTORE_CACHE,
+})
+
+export const UNDO = 'UNDO'
+export const undo = () => ({ 
+  undoCount: 0,
+  redoCount: 0,
+  restoredState: null,
+  type: UNDO,
+})
+
+export const REDO = 'REDO'
+export const redo = () => ({
+  undoCount: 0,
+  redoCount: 0,
+  restoredState: null,
+  type: REDO,
+})

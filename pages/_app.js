@@ -1,9 +1,15 @@
 import { StoreProvider } from '../store'
+import CacheHandler from '../components/CacheHandler'
+import UndoRedoHandler from '../components/UndoRedoHandler'
 import '../styles/globals.scss'
 
 const App = ({ Component, pageProps }) => (
   <StoreProvider>
-    <Component {...pageProps} />
+    <CacheHandler>
+      <UndoRedoHandler>
+        <Component {...pageProps} />
+      </UndoRedoHandler>
+    </CacheHandler>
   </StoreProvider>
 )
 

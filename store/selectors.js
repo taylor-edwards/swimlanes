@@ -16,3 +16,7 @@ export const tags = state => state.tags
 export const tag = (id, state) => state.tags[id]
 
 export const dragAndDrop = state => state.dragAndDrop
+
+export const lastExport = state => state.lastExport
+
+export const undoRedo = state => state.undoRedo

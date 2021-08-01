@@ -7,10 +7,24 @@
   white-space: nowrap;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover,
+.btn:not(:disabled):focus {
+  background: #f05337;
+  color: white;
+}
+
 .default {
   background: #efefef;
   border: 1px solid #ff6347;
   color: black;
+}
+
+.default:disabled {
+  border-color: #efefef;
 }
 
 .emphasis {
@@ -18,8 +32,6 @@
   color: white;
 }
 
-.btn:hover,
-.btn:focus {
-  background: #f05337;
-  color: white;
+.slim {
+  padding: 3px 12px 4px;
 }
