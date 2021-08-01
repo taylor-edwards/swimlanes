@@ -30,7 +30,7 @@ const cacheMiddleware = store => next => action => {
       case actions.RESTORE_CACHE:
         try {
           action.cachedState = pickCacheableState(
-            JSON.parse(localStorage.getItem('atrium_cache_v1/user0') ?? {}),
+            JSON.parse(localStorage.getItem('atrium_cache_v1/user0')) ?? {},
           )
         } catch (err) {
           console.warn(

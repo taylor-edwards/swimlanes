@@ -209,6 +209,21 @@ const noteReducers = {
         },
       },
       notes: omit(state.notes, noteID),
+      tags: merge(
+        state.tags,
+        Object.fromEntries(
+          note.tags.map(tagID => {
+            const tag = selectors.tag(tagID, state)
+            return [
+              tagID,
+              {
+                ...tag,
+                relatedNotes: rejectEquals(tag.relatedNotes, noteID),
+              },
+            ]
+          }),
+        ),
+      ),
     }
   },
   [actions.MOVE_NOTE]: (
@@ -261,6 +276,22 @@ const noteReducers = {
 const tagReducers = {
   [actions.ADD_TAG]: (state, { tagID, name, relatedNotes }) => ({
     ...state,
+    notes: merge(
+      state.notes,
+      Object.fromEntries(
+        relatedNotes.map(noteID => {
+          const note = selectors.note(noteID, state)
+          if (note.tags.includes(tagID)) {
+            return [noteID, note]
+          } else {
+            return [noteID, {
+              ...note,
+              tags: rejectEquals(note.tags, tagID),
+            }]
+          }
+        }
+      )),
+    ),
     tags: {
       ...state.tags,
       [tagID]: createTag(tagID, name, relatedNotes),
@@ -367,10 +398,8 @@ const cacheReducers = {
       timestamp,
     },
   }),
-  [actions.RESTORE_CACHE]: (state, { cachedState }) => ({
-    ...state,
-    ...cachedState,
-  }),
+  [actions.RESTORE_CACHE]: (state, { cachedState }) =>
+    merge(state, cachedState),
 }
 
 const allReducers = {

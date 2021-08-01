@@ -38,7 +38,9 @@ export const merge = (...objects) => {
   const o = {}
   for (const obj of objects) {
     for (const key in obj) {
-      o[key] = obj[key]
+      if (typeof obj[key] !== 'undefined') {
+        o[key] = obj[key]
+      }
     }
   }
   return o
