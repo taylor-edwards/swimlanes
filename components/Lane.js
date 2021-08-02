@@ -8,7 +8,7 @@ import Note from './Note'
 import styles from '../styles/Lane.module.scss'
 
 const Lane = ({ className = '', id }) => {
-  const [lane, setLane, deleteLane] = useLane(id)
+  const [lane, setLane, deleteLane, , copyNote] = useLane(id)
   const [notes, addNote, moveNote, setNoteOrder] = useNoteOrder(id)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(lane.name)
@@ -42,6 +42,7 @@ const Lane = ({ className = '', id }) => {
     e.dataTransfer.setDragImage(laneElement.current, 0, 0)
   const handleDrop = index => ({ noteID, laneID }) =>
     moveNote(laneID, noteID, index)
+  const handleCopyNote = ({ noteID }) => copyNote(noteID)
 
   return (
     <div className={[styles.lane, className].join(' ')} ref={laneElement}>
@@ -109,8 +110,8 @@ const Lane = ({ className = '', id }) => {
       
       <DropZone
         type="NOTE"
-        label="Move note"
-        onDrop={handleDrop(notes.length)}
+        label="Copy note"
+        onDrop={handleCopyNote}
         className={styles.card}
       >
         <Button onClick={handleCreate} type="emphasis">Add note</Button>

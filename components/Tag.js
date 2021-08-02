@@ -2,7 +2,7 @@ import { useTag } from '../store'
 import styles from '../styles/Tag.module.scss'
 
 const Tag = ({ className = '', id, noteID }) => {
-  const [tag, addTag, applyTag, removeTag, deleteTag] = useTag(id)
+  const [tag, applyTag, removeTag, deleteTag] = useTag(id)
   const handleDelete = () => {
     if (noteID) {
       removeTag([noteID])
@@ -15,6 +15,7 @@ const Tag = ({ className = '', id, noteID }) => {
       <button onClick={handleDelete} title="Delete tag">
         <span role="none" aria-hidden="true">&times;</span>
       </button>
+      {' '}
       #{tag.name}
     </span>
   )

@@ -26,6 +26,7 @@ export const useLane = id => useLens(
   actions.setLane.bind(null, id),
   actions.deleteLane.bind(null, id),
   actions.addNote.bind(null, id),
+  actions.copyNote.bind(null, id),
 )
 
 export const useNoteOrder = laneID => useLens(
@@ -39,13 +40,16 @@ export const useNote = id => useLens(
   selectors.note.bind(null, id),
   actions.setNote.bind(null, id),
   actions.deleteNote.bind(null, id),
+  tagID => actions.addTag(tagID, [id]),
 )
 
-export const useTags = () => useLens(selectors.tags)
+export const useTags = () => useLens(
+  selectors.tags,
+  actions.addTag,
+)
 
 export const useTag = id => useLens(
   selectors.tag.bind(null, id),
-  actions.addTag.bind(null, id),
   actions.applyTag.bind(null, id),
   actions.removeTag.bind(null, id),
   actions.deleteTag.bind(null, id),

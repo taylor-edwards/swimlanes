@@ -4,10 +4,11 @@ import Button from './Button'
 import DragTarget from './DragTarget'
 import Input from './Input'
 import Tag from './Tag'
+import TagInput from './TagInput'
 import styles from '../styles/Note.module.scss'
 
 const Note = ({ className = '', id, laneID }) => {
-  const [note, setNote, deleteNote] = useNote(id)
+  const [note, setNote, deleteNote, addTag] = useNote(id)
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(note.name)
   const [desc, setDesc] = useState(note.description)
@@ -90,6 +91,10 @@ const Note = ({ className = '', id, laneID }) => {
         {note.tags.map(tagID => <Tag id={tagID} key={tagID} noteID={id} />)}
       </p>
 
+      {editing && (
+        <TagInput onSave={addTag} />
+      )}
+
       <div className={styles.controls}>
         {!editing && (
           <Button onClick={() => setEditing(true)} ref={editElement}>
@@ -99,12 +104,12 @@ const Note = ({ className = '', id, laneID }) => {
 
         {editing && (
           <>
-            <Button onClick={handleDelete} className={styles.btn}>
-              Delete
-            </Button>
-
             <Button onClick={handleCancel} className={styles.btn}>
               Cancel
+            </Button>
+
+            <Button onClick={handleDelete} className={styles.btn}>
+              Delete
             </Button>
 
             <Button

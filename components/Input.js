@@ -4,7 +4,7 @@ import styles from '../styles/Input.module.scss'
 
 const Input = forwardRef(({
   className = '',
-  type,
+  type = 'text',
   value,
   onChange = noop,
   onEnter = noop,
@@ -59,6 +59,8 @@ const Input = forwardRef(({
           className={[styles.input, styles.textarea, className].join(' ')}
         />
       )
+
+    // TODO: handle number, date, file, etc inputs
     
     case 'text': // fallthrough
     default:

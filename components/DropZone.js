@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import { useDragAndDrop } from '../store'
 import { noop } from '../util'
 import styles from '../styles/Draggable.module.scss'
 
-const DropZone = ({
+const DropZone = forwardRef(({
   children,
   className = '',
   label = 'Drop here',
   onDrop = noop,
   type,
-}) => {
-  const zoneElement = useRef(null)
+}, zoneElement) => {
   const [zoneRect, setZoneRect] = useState({
     bottom: 0,
     left: 0,
@@ -22,7 +21,7 @@ const DropZone = ({
   const dropTypeIsCompatible = type === dragAndDrop.itemType
 
   useEffect(() => {
-    if (!dragAndDrop.itemType || !dropTypeIsCompatible) {
+    if (!dragAndDrop.isDragging || !dropTypeIsCompatible) {
       setIsHovering(false)
     }
   }, [dragAndDrop, dropTypeIsCompatible])
@@ -31,22 +30,29 @@ const DropZone = ({
     if (dropTypeIsCompatible && type === dragAndDrop.itemType) {
       // enable dropping by calling preventDefault
       e.preventDefault()
+      e.stopPropagation()
     }
   }
   const handleDragEnter = e => {
     if (dropTypeIsCompatible) {
+      e.preventDefault()
+      e.stopPropagation()
       setIsHovering(true)
     }
   }
   const handleDragLeave = e => {
     if (dropTypeIsCompatible && !e.currentTarget.contains(e.relatedTarget)) {
+      e.preventDefault()
+      e.stopPropagation()
       setIsHovering(false)
     }
   }
   const handleDrop = e => {
     if (dropTypeIsCompatible) {
       e.preventDefault()
+      e.stopPropagation()
       setIsHovering(false)
+      setDragItem(false)
       onDrop(dragAndDrop.heldItem)
     }
   }
@@ -68,6 +74,6 @@ const DropZone = ({
       {children}
     </div>
   )
-}
+})
 
 export default DropZone

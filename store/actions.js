@@ -34,6 +34,13 @@ export const addNote = (laneID, name, description, tags, index) => ({
   type: ADD_NOTE,
 })
 
+export const COPY_NOTE = 'COPY_NOTE'
+export const copyNote = (laneID, noteID) => ({
+  noteID,
+  laneID,
+  type: COPY_NOTE,
+})
+
 export const DELETE_NOTE = 'DELETE_NOTE'
 export const deleteNote = noteID => ({ noteID, type: DELETE_NOTE })
 
@@ -50,10 +57,9 @@ export const SET_NOTE = 'SET_NOTE'
 export const setNote = (noteID, note) => ({ noteID, note, type: SET_NOTE })
 
 export const ADD_TAG = 'ADD_TAG'
-export const addTag = (tagID, relatedNotes, name) => ({
+export const addTag = (tagID, relatedNotes = []) => ({
   tagID,
   relatedNotes,
-  name,
   type: ADD_TAG,
 })
 
@@ -75,7 +81,8 @@ export const DELETE_TAG = 'DELETE_TAG'
 export const deleteTag = tagID => ({ tagID, type: DELETE_TAG })
 
 export const SET_DRAG_ITEM = 'SET_DRAG_ITEM'
-export const setDragItem = (itemType, heldItem) => ({
+export const setDragItem = (isDragging, itemType, heldItem) => ({
+  isDragging,
   itemType,
   heldItem,
   type: SET_DRAG_ITEM,

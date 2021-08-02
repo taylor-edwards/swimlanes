@@ -7,6 +7,9 @@ const noteMiddleware = store => next => action => {
   if (action.type === actions.ADD_NOTE) {
     action.noteID = genID()
   }
+  if (action.type === actions.COPY_NOTE) {
+    action.newNoteID = genID()
+  }
   return next(action)
 }
 
@@ -16,6 +19,15 @@ const laneMiddleware = store => next => action => {
   }
   return next(action)
 }
+
+/*
+const tagMiddleware = store => next => action => {
+  if (action.type === actions.ADD_TAG) {
+    action.laneID = genID()
+  }
+  return next(action)
+}
+*/
 
 const pickCacheableState = state => ({
   laneOrder: state.laneOrder,

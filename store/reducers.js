@@ -39,28 +39,28 @@ export const initialState = {
       name: 'My first note',
       description: 'A sample note (this is the description)',
       laneID: 'L000',
-      tags: ['T002', 'T003'],
+      tags: ['motorcycles', 'cat gif'],
     },
     N001: {
       id: 'N001',
       name: 'Test note',
       description: '',
       laneID: 'L000',
-      tags: ['T001', 'T003'],
+      tags: ['dev', 'cat gif'],
     },
     N002: {
       id: 'N002',
       name: undefined,
       description: 'I forgot to type a name for this note',
       laneID: 'L000',
-      tags: ['T002'],
+      tags: ['motorcycles'],
     },
     N003: {
       id: 'N003',
       name: 'Recipes for toast',
       description: 'should notes support a rich text format?',
       laneID: 'L001',
-      tags: ['T000'],
+      tags: ['cooking'],
     },
     N004: {
       id: 'N004',
@@ -71,20 +71,16 @@ export const initialState = {
     },
   },
   tags: {
-    T000: {
-      name: 'cooking',
+    cooking: {
       relatedNotes: ['N003'],
     },
-    T001: {
-      name: 'dev',
+    dev: {
       relatedNotes: ['N001'],
     },
-    T002: {
-      name: 'motorcycles',
+    motorcycles: {
       relatedNotes: ['N000', 'N002'],
     },
-    T003: {
-      name: 'catgif',
+    'cat gif': {
       relatedNotes: ['N000', 'N001'],
     },
   },
@@ -121,9 +117,8 @@ const createNote = (
   tags,
 })
 
-const createTag = (id, name = 'New tag', relatedNotes = []) => ({
+const createTag = (id, relatedNotes = []) => ({
   id,
-  name,
   relatedNotes,
 })
 
@@ -226,6 +221,43 @@ const noteReducers = {
       ),
     }
   },
+  [actions.COPY_NOTE]: (
+    state,
+    { noteID, newNoteID, laneID },
+  ) => {
+    const note = selectors.note(noteID, state)
+    const lane = selectors.lane(laneID, state)
+    return {
+      ...state,
+      lanes: {
+        ...state.lanes,
+        [laneID]: {
+          ...lane,
+          noteOrder: insert(lane.noteOrder, newNoteID),
+        },
+      },
+      notes: {
+        ...state.notes,
+        [newNoteID]: {
+          ...note,
+          laneID,
+        },
+      },
+      tags: merge(
+        state.tags,
+        Object.fromEntries(note.tags.map(tagID => {
+          const tag = selectors.tag(tagID, state)
+          return [
+            tagID,
+            {
+              ...tag,
+              relatedNotes: insert(tag.relatedNotes, newNoteID),
+            },
+          ]
+        })),
+      ),
+    }
+  },
   [actions.MOVE_NOTE]: (
     state,
     { noteID, fromLaneID, toLaneID, toIndex = Infinity },
@@ -274,29 +306,62 @@ const noteReducers = {
 }
 
 const tagReducers = {
-  [actions.ADD_TAG]: (state, { tagID, name, relatedNotes }) => ({
-    ...state,
-    notes: merge(
-      state.notes,
-      Object.fromEntries(
-        relatedNotes.map(noteID => {
-          const note = selectors.note(noteID, state)
-          if (note.tags.includes(tagID)) {
-            return [noteID, note]
-          } else {
-            return [noteID, {
-              ...note,
-              tags: rejectEquals(note.tags, tagID),
-            }]
-          }
-        }
-      )),
-    ),
-    tags: {
-      ...state.tags,
-      [tagID]: createTag(tagID, name, relatedNotes),
-    },
-  }),
+  [actions.ADD_TAG]: (state, { tagID, relatedNotes }) => {
+    if (state.tags.hasOwnProperty(tagID)) {
+      const tag = selectors.tag(tagID, state)
+      return {
+        ...state,
+        notes: merge(
+          state.notes,
+          Object.fromEntries(relatedNotes.map(noteID => {
+            const note = selectors.note(noteID, state)
+            if (note.tags.includes(tagID)) {
+              return [noteID, note]
+            } else {
+              return [
+                noteID,
+                {
+                  ...note,
+                  tags: [...note.tags, tagID],
+                },
+              ]
+            }
+          })),
+        ),
+        tags: {
+          ...state.tags,
+          [tagID]: {
+            ...tag,
+            relatedNotes: uniq(tag.relatedNotes.concat(relatedNotes)),
+          },
+        },
+      }
+    } else {
+      return {
+        ...state,
+        notes: merge(
+          state.notes,
+          Object.fromEntries(
+            relatedNotes.map(noteID => {
+              const note = selectors.note(noteID, state)
+              if (note.tags.includes(tagID)) {
+                return [noteID, note]
+              } else {
+                return [noteID, {
+                  ...note,
+                  tags: [...note.tags, tagID],
+                }]
+              }
+            }
+          )),
+        ),
+        tags: {
+          ...state.tags,
+          [tagID]: createTag(tagID, relatedNotes),
+        },
+      }
+    }
+  },
   [actions.DELETE_TAG]: (state, { tagID }) => {
     const tag = selectors.tag(tagID, state)
     return {
@@ -367,11 +432,16 @@ const tagReducers = {
 }
 
 const dragAndDropReducers = {
-  [actions.SET_DRAG_ITEM]: (state, { heldItem = null, itemType = null }) => ({
+  [actions.SET_DRAG_ITEM]: (state, {
+    isDragging = false,
+    heldItem = null,
+    itemType = null,
+  }) => ({
     ...state,
     dragAndDrop: {
-      itemType,
-      heldItem,
+      isDragging,
+      itemType: isDragging ? itemType : null,
+      heldItem: isDragging ? heldItem : null,
     }
   }),
 }

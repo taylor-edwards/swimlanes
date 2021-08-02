@@ -12,11 +12,11 @@ const DragTarget = ({
 }) => {
   const [dragAndDrop, setDragItem] = useDragAndDrop()
   const handleDragStart = e => {
-    setDragItem(type, item)
+    setDragItem(true, type, item)
     onDragStart(e) 
   }
   const handleDragEnd = e => {
-    setDragItem()
+    setDragItem(false)
     onDragEnd(e)
   }
   return (
