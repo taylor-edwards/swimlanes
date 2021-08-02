@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useMemo } from 'react'
 import { noop } from '../util'
 import styles from '../styles/Input.module.scss'
 
@@ -12,6 +12,7 @@ const Input = forwardRef(({
   onInput = noop,
   onKeyDown = noop,
   ignoreShiftKey = false,
+  autoCompletions = [],
   ...inheritedProps
 }, ref) => {
   const handleChange = e => {
@@ -37,11 +38,27 @@ const Input = forwardRef(({
         onEsc(value)
         break
 
+      case 'Tab': {
+        const match = matchingCompletions[0]
+        if (value && value.length > 0 && match) {
+          e.preventDefault()
+          onInput(match)
+        }
+        break
+      }
+
       default:
         break
     }
     onKeyDown(e)
   }
+
+  const matchingCompletions = useMemo(() =>
+    !value || value.length === 0
+      ? []
+      : autoCompletions.filter(str => str.startsWith(value)),
+    [autoCompletions, value],
+  )
 
   const props = {
     ...inheritedProps,
@@ -65,11 +82,18 @@ const Input = forwardRef(({
     case 'text': // fallthrough
     default:
       return (
-        <input
-          {...props}
-          className={[styles.input, className].join(' ')}
-          type="text"
-        />
+        <div className={[styles.container, className].join(' ')}>
+          <input
+            {...props}
+            className={styles.input}
+            type="text"
+          />
+          <ul className={styles.completions}>
+            {matchingCompletions.map(str => (
+              <li key={str} className={styles.match}>{str}</li>
+            ))}
+          </ul>
+        </div>
       )
   }
 })

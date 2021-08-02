@@ -1,7 +1,7 @@
 import { useTag } from '../store'
 import styles from '../styles/Tag.module.scss'
 
-const Tag = ({ className = '', id, noteID }) => {
+const Tag = ({ className = '', id, noteID, showDelete = false }) => {
   const [tag, applyTag, removeTag, deleteTag] = useTag(id)
   const handleDelete = () => {
     if (noteID) {
@@ -12,9 +12,9 @@ const Tag = ({ className = '', id, noteID }) => {
   }
   return (
     <span className={[styles.tag, className].join(' ')}>
-      <button onClick={handleDelete} title="Delete tag">
+      {showDelete && <button onClick={handleDelete} title="Delete tag">
         <span role="none" aria-hidden="true">&times;</span>
-      </button>
+      </button>}
       {' '}
       #{tag.name}
     </span>

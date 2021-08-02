@@ -65,6 +65,7 @@ const Note = ({ className = '', id, laneID }) => {
             type="text"
             ref={nameElement}
             value={name}
+            placeholder="Title"
             onInput={setName}
             onEnter={focusDesc}
             onEsc={handleCancel}
@@ -81,6 +82,7 @@ const Note = ({ className = '', id, laneID }) => {
           type="textarea"
           ref={descElement}
           value={desc}
+          placeholder="Description"
           onInput={setDesc}
           onEnter={handleSave}
           onEsc={handleCancel}
@@ -88,8 +90,12 @@ const Note = ({ className = '', id, laneID }) => {
       )}
 
       <p>
-        {note.tags.map(tagID => <Tag id={tagID} key={tagID} noteID={id} />)}
+        {note.tags.map(tagID => (
+          <Tag id={tagID} key={tagID} noteID={id} showDelete={editing} />
+        ))}
       </p>
+
+      <div className={styles.spacer} />
 
       {editing && (
         <TagInput onSave={addTag} />
