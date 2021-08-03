@@ -142,7 +142,7 @@ const laneReducers = {
     laneOrder: rejectEquals(state.laneOrder, laneID),
     lanes: omit(state.lanes, laneID),
     notes: omitWhen(
-      key => !state.lanes[laneID].noteOrder.includes(key),
+      key => state.lanes[laneID].noteOrder.includes(key),
       state.notes,
     ),
   }),
@@ -194,6 +194,21 @@ const noteReducers = {
   [actions.DELETE_NOTE]: (state, { noteID }) => {
     const note = selectors.note(noteID, state)
     const lane = selectors.lane(note.laneID, state)
+    const unusedTags = []
+    const updatedTags = Object.fromEntries(
+      note.tags.map(tagID => {
+        const tag = selectors.tag(tagID, state)
+        const newTag = {
+          ...tag,
+          relatedNotes: rejectEquals(tag.relatedNotes, noteID),
+        }
+        if (newTag.relatedNotes.length === 0) {
+          // cull unreferenced tags
+          unusedTags.push(tagID)
+        }
+        return [tagID, newTag]
+      }),
+    )
     return {
       ...state,
       lanes: {
@@ -204,20 +219,8 @@ const noteReducers = {
         },
       },
       notes: omit(state.notes, noteID),
-      tags: merge(
-        state.tags,
-        Object.fromEntries(
-          note.tags.map(tagID => {
-            const tag = selectors.tag(tagID, state)
-            return [
-              tagID,
-              {
-                ...tag,
-                relatedNotes: rejectEquals(tag.relatedNotes, noteID),
-              },
-            ]
-          }),
-        ),
+      tags: omitWhen(
+        tagID => unusedTags.includes(tagID), merge(state.tags, updatedTags),
       ),
     }
   },
@@ -241,6 +244,7 @@ const noteReducers = {
         [newNoteID]: {
           ...note,
           laneID,
+          id: newNoteID,
         },
       },
       tags: merge(
@@ -406,6 +410,9 @@ const tagReducers = {
   },
   [actions.REMOVE_TAG]: (state, { tagID, relatedNotes }) => {
     const tag = selectors.tag(tagID, state)
+    const newRelatedNotes = tag.relatedNotes.filter(
+      id => !relatedNotes.includes(id),
+    )
     return {
       ...state,
       notes: {
@@ -420,11 +427,11 @@ const tagReducers = {
           }
         )),
       },
-      tags: {
+      tags: newRelatedNotes.length === 0 ? omit(state.tags, tagID) : {
         ...state.tags,
         [tagID]: {
           ...tag,
-          relatedNotes: rejectEquals(tag.relatedNotes, tagID),
+          relatedNotes: newRelatedNotes,
         },
       },
     }

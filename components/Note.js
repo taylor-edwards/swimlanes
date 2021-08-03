@@ -98,7 +98,7 @@ const Note = ({ className = '', id, laneID }) => {
       <div className={styles.spacer} />
 
       {editing && (
-        <TagInput onSave={addTag} />
+        <TagInput onSave={addTag} onEnter={handleSave} />
       )}
 
       <div className={styles.controls}>

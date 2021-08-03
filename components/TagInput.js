@@ -8,22 +8,27 @@ const TagInput = ({
   className = '',
   onSave = noop,
   onCancel = noop,
+  onEnter = noop,
 }) => {
   const [value, setValue] = useState('')
   const [tags, addTag] = useTags()
   const handleSave = () => {
-    const newTags = value.split(',')
-    newTags.forEach(input => {
-      const tag = input.replace(/(^\s+)|(\s+$)/g, '')
-      if (tag.length > 0) {
-        if (onSave !== noop) {
-          onSave(tag)
-        } else {
-          addTag(tag)
+    if (value === '') {
+      onEnter('')
+    } else {
+      const newTags = value.split(',')
+      newTags.forEach(input => {
+        const tag = input.replace(/(^\s+)|(\s+$)/g, '')
+        if (tag.length > 0) {
+          if (onSave !== noop) {
+            onSave(tag)
+          } else {
+            addTag(tag)
+          }
         }
-      }
-    })
-    setValue('')
+      })
+      setValue('')
+    }
   }
   const handleCancel = () => {
     setValue('')

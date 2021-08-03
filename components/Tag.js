@@ -16,7 +16,7 @@ const Tag = ({ className = '', id, noteID, showDelete = false }) => {
         <span role="none" aria-hidden="true">&times;</span>
       </button>}
       {' '}
-      #{tag.name}
+      #{id}
     </span>
   )
 }

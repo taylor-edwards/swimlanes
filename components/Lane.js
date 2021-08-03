@@ -89,8 +89,8 @@ const Lane = ({ className = '', id }) => {
 
           {editing && (
             <>
-              <Button onClick={handleDelete}>Delete</Button>
               <Button onClick={handleCancel}>Cancel</Button>
+              <Button onClick={handleDelete}>Delete</Button>
               <Button onClick={handleSave} type="emphasis">Save</Button>
             </>
           )}

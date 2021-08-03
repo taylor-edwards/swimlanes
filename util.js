@@ -27,7 +27,7 @@ export const omit = (obj, prop) => {
 export const omitWhen = (predFn, obj) => {
   const o = {}
   for (const key in obj) {
-    if (predFn(key)) {
+    if (!predFn(key)) {
       o[key] = obj[key]
     }
   }
