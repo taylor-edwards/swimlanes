@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  grid-gap: 10px;
+}
+
+.input {
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.btn {
+  margin: 6px 0;
+}

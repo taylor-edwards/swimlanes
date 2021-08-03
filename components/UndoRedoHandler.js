@@ -6,7 +6,7 @@ const UndoRedoHandler = ({ children }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const listener = e => {
-        if (e.ctrlKey) {
+        if (e.ctrlKey && !e.shiftKey && !e.altKey) {
           switch (e.key) {
             case 'z':
               undo()

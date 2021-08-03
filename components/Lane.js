@@ -63,6 +63,8 @@ const Lane = ({ className = '', id }) => {
           {editing && (
             <Input
               type="text"
+              placeholder="Title"
+              title="Title"
               ref={nameElement}
               value={name}
               onInput={setName}

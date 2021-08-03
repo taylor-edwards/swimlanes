@@ -5,6 +5,12 @@
   opacity: 0.8;
 }
 
+@media (pointer: coarse) {
+  .draggable {
+    display: none;
+  }
+}
+
 .draggable:hover {
   color: #ff6347;
   opacity: 1;
@@ -20,9 +26,6 @@
 
 .dropzone {
   position: relative;
-}
-
-.hovering {
 }
 
 .hovering:before {

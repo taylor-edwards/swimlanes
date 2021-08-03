@@ -66,6 +66,7 @@ const Note = ({ className = '', id, laneID }) => {
             ref={nameElement}
             value={name}
             placeholder="Title"
+            title="Title"
             onInput={setName}
             onEnter={focusDesc}
             onEsc={handleCancel}
@@ -83,10 +84,15 @@ const Note = ({ className = '', id, laneID }) => {
           ref={descElement}
           value={desc}
           placeholder="Description"
+          title="Description"
           onInput={setDesc}
           onEnter={handleSave}
           onEsc={handleCancel}
         />
+      )}
+
+      {editing && (
+        <TagInput onSave={addTag} onEnter={handleSave} />
       )}
 
       <p>
@@ -96,10 +102,6 @@ const Note = ({ className = '', id, laneID }) => {
       </p>
 
       <div className={styles.spacer} />
-
-      {editing && (
-        <TagInput onSave={addTag} onEnter={handleSave} />
-      )}
 
       <div className={styles.controls}>
         {!editing && (
