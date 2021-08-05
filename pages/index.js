@@ -13,9 +13,8 @@ const Home = () => {
   return (
     <div>
       <Head>
-        <title>Atrium</title>
-        <meta name="description" content="Swim lane organizer" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Swimlanes</title>
+        <meta name="description" content="The privacy-first task board" />
       </Head>
 
       <ControlBar />
@@ -31,6 +30,8 @@ const Home = () => {
               Create a lane and add a note to it.
               <br />
               Drag and drop notes between lanes.
+              <br />
+              Data never leaves your device.
             </p>
           </div>
 
