@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { useLane, useNoteOrder } from '../store'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useLane, useNoteOrder, useFilters, useTags } from '../store'
 import Button from './Button'
 import DragTarget from './DragTarget'
 import DropZone from './DropZone'
@@ -10,6 +10,8 @@ import styles from '../styles/Lane.module.scss'
 const Lane = ({ className = '', id }) => {
   const [lane, setLane, deleteLane, , copyNote] = useLane(id)
   const [notes, addNote, moveNote, setNoteOrder] = useNoteOrder(id)
+  const [filters] = useFilters()
+  const [tags] = useTags()
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(lane.name)
   const nameElement = useRef(null)
@@ -43,6 +45,20 @@ const Lane = ({ className = '', id }) => {
   const handleDrop = index => ({ noteID, laneID }) =>
     moveNote(laneID, noteID, index)
   const handleCopyNote = ({ noteID }) => copyNote(noteID)
+
+  const filteredNotes = useMemo(
+    () => filters.tags.length > 0
+      ? notes.filter(noteID => {
+          for (const tagID of filters.tags) {
+            if (tags[tagID].relatedNotes.includes(noteID)) {
+              return true
+            }
+          }
+          return false
+        })
+      : notes,
+    [filters, notes, tags],
+  )
 
   return (
     <div className={[styles.lane, className].join(' ')} ref={laneElement}>
@@ -99,7 +115,7 @@ const Lane = ({ className = '', id }) => {
         </div>
       </div>
 
-      {notes.map((noteID, i) => (
+      {filteredNotes.map((noteID, i) => (
         <DropZone
           key={noteID}
           type="NOTE"

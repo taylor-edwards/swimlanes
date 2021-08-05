@@ -20,22 +20,15 @@ const laneMiddleware = store => next => action => {
   return next(action)
 }
 
-/*
-const tagMiddleware = store => next => action => {
-  if (action.type === actions.ADD_TAG) {
-    action.laneID = genID()
-  }
-  return next(action)
-}
-*/
-
 const pickCacheableState = state => ({
+  filters: state.filters,
   laneOrder: state.laneOrder,
   lanes: state.lanes,
   lastExport: state.lastExport,
   notes: state.notes,
   tags: state.tags,
 })
+
 const cacheMiddleware = store => next => action => {
   if (typeof window !== 'undefined') {
     switch (action.type) {

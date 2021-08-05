@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useMemo } from 'react'
+import { useTags } from '../store'
 import ControlBar from '../components/ControlBar'
 import Lanes from '../components/Lanes'
 import Tags from '../components/Tags'
 import styles from '../styles/Home.module.scss'
 
 const Home = () => {
+  const [tags] = useTags()
+  const sortedTags = useMemo(() => Object.keys(tags).sort(), [tags])
   return (
     <div>
       <Head>
@@ -30,7 +34,7 @@ const Home = () => {
             </p>
           </div>
 
-          <Tags className={styles.card} />
+          <Tags className={styles.card} tags={sortedTags} />
         </header>
 
         <Lanes />

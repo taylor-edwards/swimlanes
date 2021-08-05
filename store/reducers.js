@@ -84,6 +84,9 @@ export const initialState = {
       relatedNotes: ['N000', 'N001'],
     },
   },
+  filters: {
+    tags: [],
+  },
   dragAndDrop: {
     heldItem: null,
   },
@@ -222,6 +225,12 @@ const noteReducers = {
       tags: omitWhen(
         tagID => unusedTags.includes(tagID), merge(state.tags, updatedTags),
       ),
+      filters: unusedTags.length > 0
+        ? {
+            ...state.filters,
+            tags: state.filters.tags.filter(tagID => !unusedTags.includes(tagID)),
+          }
+        : state.filters,
     }
   },
   [actions.COPY_NOTE]: (
@@ -383,6 +392,10 @@ const tagReducers = {
         )),
       ),
       tags: omit(state.tags, tagID),
+      filters: {
+        ...state.filters,
+        tags: rejectEquals(state.filters.tags, tagID),
+      },
     }
   },
   [actions.APPLY_TAG]: (state, { tagID, relatedNotes }) => {
@@ -413,29 +426,63 @@ const tagReducers = {
     const newRelatedNotes = tag.relatedNotes.filter(
       id => !relatedNotes.includes(id),
     )
+    const doDeleteTag = newRelatedNotes.length === 0
     return {
       ...state,
       notes: {
         ...state.notes,
         ...Object.fromEntries(
-          relatedNotes.map(noteID => {
-            const note = selectors.note(noteID, state)
-            return [noteID, {
-              ...note,
-              tags: rejectEquals(note.tags, tagID),
-            }]
-          }
-        )),
+          relatedNotes.map((noteID) => {
+            const note = selectors.note(noteID, state);
+            return [
+              noteID,
+              {
+                ...note,
+                tags: rejectEquals(note.tags, tagID),
+              },
+            ];
+          })
+        ),
       },
-      tags: newRelatedNotes.length === 0 ? omit(state.tags, tagID) : {
-        ...state.tags,
-        [tagID]: {
-          ...tag,
-          relatedNotes: newRelatedNotes,
-        },
+      tags: doDeleteTag
+        ? omit(state.tags, tagID)
+        : {
+            ...state.tags,
+            [tagID]: {
+              ...tag,
+              relatedNotes: newRelatedNotes,
+            },
+          },
+      filters: doDeleteTag
+        ? {
+            ...state.filters,
+            tags: rejectEquals(state.filters.tags, tagID),
+          }
+        : state.filters,
+    }
+  },
+}
+
+const filterReducers = {
+  [actions.ADD_FILTER_TAG]: (state, { tagID }) => {
+    if (state.filters.tags.includes(tagID)) {
+      return state
+    }
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        tags: insert(state.filters.tags, tagID),
       },
     }
   },
+  [actions.REMOVE_FILTER_TAG]: (state, { tagID }) => ({
+    ...state,
+    filters: {
+      ...state.filters,
+      tags: rejectEquals(state.filters.tags, tagID),
+    },
+  }),
 }
 
 const dragAndDropReducers = {
@@ -483,6 +530,7 @@ const allReducers = {
   ...laneReducers,
   ...noteReducers,
   ...tagReducers,
+  ...filterReducers,
   ...dragAndDropReducers,
   ...undoRedoReducers,
   ...cacheReducers,

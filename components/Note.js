@@ -3,7 +3,7 @@ import { useNote } from '../store'
 import Button from './Button'
 import DragTarget from './DragTarget'
 import Input from './Input'
-import Tag from './Tag'
+import Tags from './Tags'
 import TagInput from './TagInput'
 import styles from '../styles/Note.module.scss'
 
@@ -74,34 +74,34 @@ const Note = ({ className = '', id, laneID }) => {
         )}
       </div>
 
-      {!editing && (
-        <p className={styles.description}>{note.description}</p>
-      )}
+      {!editing && <p className={styles.desc}>{note.description}</p>}
 
       {editing && (
-        <Input
-          type="textarea"
-          ref={descElement}
-          value={desc}
-          placeholder="Description"
-          title="Description"
-          onInput={setDesc}
-          onEnter={handleSave}
-          onEsc={handleCancel}
-        />
+        <>
+          <Input
+            type="textarea"
+            ref={descElement}
+            value={desc}
+            placeholder="Description"
+            title="Description"
+            onInput={setDesc}
+            onEnter={handleSave}
+            onEsc={handleCancel}
+          />
+          <div className={styles.spacer} />
+        </>
       )}
 
       {editing && (
         <TagInput onSave={addTag} onEnter={handleSave} />
       )}
 
-      <p>
-        {note.tags.map(tagID => (
-          <Tag id={tagID} key={tagID} noteID={id} showDelete={editing} />
-        ))}
-      </p>
-
-      <div className={styles.spacer} />
+      <Tags
+        className={styles.tags}
+        tags={note.tags}
+        noteID={id}
+        showDelete={editing}
+      />
 
       <div className={styles.controls}>
         {!editing && (

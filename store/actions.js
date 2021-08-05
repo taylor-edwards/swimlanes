@@ -80,6 +80,18 @@ export const removeTag = (tagID, relatedNotes) => ({
 export const DELETE_TAG = 'DELETE_TAG'
 export const deleteTag = tagID => ({ tagID, type: DELETE_TAG })
 
+export const ADD_FILTER_TAG = 'ADD_FILTER_TAG'
+export const addFilterTag = tagID => ({
+  tagID,
+  type: ADD_FILTER_TAG,
+})
+
+export const REMOVE_FILTER_TAG = 'REMOVE_FILTER_TAG'
+export const removeFilterTag = tagID => ({
+  tagID,
+  type: REMOVE_FILTER_TAG,
+})
+
 export const SET_DRAG_ITEM = 'SET_DRAG_ITEM'
 export const setDragItem = (isDragging, itemType, heldItem) => ({
   isDragging,

@@ -32,6 +32,22 @@
   color: white;
 }
 
-.slim {
+.slim,
+.pill {
   padding: 3px 12px 4px;
+}
+
+.pill {
+  background: #e0e0e0;
+  border-radius: 100px;
+}
+
+.active {
+  background: #6a90ff;
+  color: white;
+}
+
+.active:not(:disabled):hover,
+.active:not(:disabled):focus {
+  background: #88abff;
 }

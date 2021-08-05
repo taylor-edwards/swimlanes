@@ -55,6 +55,12 @@ export const useTag = id => useLens(
   actions.deleteTag.bind(null, id),
 )
 
+export const useFilters = () => useLens(
+  selectors.filters,
+  actions.addFilterTag,
+  actions.removeFilterTag,
+)
+
 export const useDragAndDrop = () => useLens(
   selectors.dragAndDrop,
   actions.setDragItem,
