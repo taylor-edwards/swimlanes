@@ -107,8 +107,8 @@ export const exportCache = () => ({
 })
 
 export const RESTORE_CACHE ='RESTORE_CACHE'
-export const restoreCache = () => ({
-  cachedState: null,
+export const restoreCache = cachedState => ({
+  cachedState,
   type: RESTORE_CACHE,
 })
 

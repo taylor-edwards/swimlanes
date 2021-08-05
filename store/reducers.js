@@ -523,7 +523,7 @@ const cacheReducers = {
     },
   }),
   [actions.RESTORE_CACHE]: (state, { cachedState }) =>
-    merge(state, cachedState),
+    cachedState ? merge(state, cachedState) : state,
 }
 
 const allReducers = {
@@ -545,7 +545,7 @@ export const rootReducer = (state = initialState, action) => {
   }
 
   // special handling for global undo/redo
-  if (undoableActions.indexOf(action.type) !== -1) {
+  if (undoableActions.includes(action.type)) {
     nextState = {
       ...nextState,
       undoRedo: {

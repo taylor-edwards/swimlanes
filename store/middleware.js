@@ -33,51 +33,55 @@ const cacheMiddleware = store => next => action => {
   if (typeof window !== 'undefined') {
     switch (action.type) {
       case actions.RESTORE_CACHE:
-        try {
-          action.cachedState = pickCacheableState(
-            JSON.parse(localStorage.getItem('atrium_cache_v1/user0')) ?? {},
-          )
-        } catch (err) {
-          console.warn(
-            'Could not restore application state from localStorage',
-            { err },
-          )
+        if (action.cachedState) {
+          action.cachedState = pickCacheableState(action.cachedState)
+        } else {
+          try {
+            action.cachedState = pickCacheableState(
+              JSON.parse(localStorage.getItem('atrium_cache_v1/user0')) ?? {},
+            )
+          } catch (err) {
+            console.warn(
+              'Could not restore application state from localStorage',
+              { err },
+            )
+          }
         }
-        return next(action)
+        break
 
       case actions.EXPORT_CACHE:
         try {
           // only supports `action.format === 'json'`
           const json = JSON.stringify(pickCacheableState(store.getState()))
           const a = document.createElement('a')
-          a.href = `data:text/json;charset=utf-8,${encodeURIComponent(json)}`
+          const prefix = 'data:text/json;charset=utf-8,'
+          a.href = `${prefix}${encodeURIComponent(json)}`
           a.download = 'swimlanes.json'
           a.click()
           action.timestamp = Date.now()
-          action.size = json.length
+          action.size = prefix.length + json.length
         } catch (err) {
           console.warn('Could not export swimlanes.json', { err })
         }
-        return next(action)
         break
-
-      default: {
-        const nextAction = next(action)
-        try {
-          const cacheableState = pickCacheableState(store.getState())
-          localStorage.setItem(
-            'atrium_cache_v1/user0',
-            JSON.stringify(cacheableState),
-          )
-        } catch (err) {
-          console.warn(
-            'Could not cache application state to localStorage',
-            { err },
-          )
-        }
-        return nextAction
-      }
     }
+
+    const nextAction = next(action)
+
+    try {
+      const cacheableState = pickCacheableState(store.getState())
+      localStorage.setItem(
+        'atrium_cache_v1/user0',
+        JSON.stringify(cacheableState),
+      )
+    } catch (err) {
+      console.warn(
+        'Could not cache application state to localStorage',
+        { err },
+      )
+    }
+
+    return nextAction
   }
 }
 

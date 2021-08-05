@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 const twelveHours = 1000 * 60 * 60 * 12
 
-const Timestamp = ({ className = '', date }) => {
+const Timestamp = ({ date }) => {
   const dateString = useMemo(() => {
     const d = new Date(date)
     const diff = Date.now() - d
@@ -14,9 +14,7 @@ const Timestamp = ({ className = '', date }) => {
     }
     return str
   }, [date])
-  return (
-    <span className={className}>{dateString}</span>
-  )
+  return dateString
 }
 
 export default Timestamp
