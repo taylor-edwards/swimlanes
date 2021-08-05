@@ -2,7 +2,7 @@ import { forwardRef, useMemo } from 'react'
 import { noop } from '../util'
 import styles from '../styles/Input.module.scss'
 
-const Input = forwardRef(({
+const Input = ({
   className = '',
   type = 'text',
   value,
@@ -96,6 +96,6 @@ const Input = forwardRef(({
         </div>
       )
   }
-})
+}
 
-export default Input
+export default forwardRef(Input)

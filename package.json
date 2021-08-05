@@ -1,12 +1,13 @@
 {
-  "name": "atrium",
-  "version": "0.1.0",
+  "name": "swimlanes",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export -o docs"
   },
   "dependencies": {
     "next": "11.0.1",

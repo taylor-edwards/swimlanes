@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { useMemo } from 'react'
 import { useTags } from '../store'
 import ControlBar from '../components/ControlBar'

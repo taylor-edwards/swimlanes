@@ -3,8 +3,9 @@ import { useUndoRedo } from '../store'
 
 const UndoRedoHandler = ({ children }) => {
   const [undoRedo, undo, redo] = useUndoRedo()
+  const windowType = typeof window
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (windowType !== 'undefined') {
       const listener = e => {
         if (e.ctrlKey && !e.shiftKey && !e.altKey) {
           switch (e.key) {
@@ -21,7 +22,7 @@ const UndoRedoHandler = ({ children }) => {
       return () =>
         window.removeEventListener('keydown', listener, false)
     }
-  }, [typeof window])
+  }, [windowType, undo, redo])
   return children
 }
 
