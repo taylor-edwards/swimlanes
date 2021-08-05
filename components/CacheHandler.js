@@ -7,7 +7,7 @@ const CacheHandler = ({ children }) => {
     if (lastExport.timestamp === null) {
       restoreCache()
     }
-  }, [lastExport.timestamp, restoreCache])
+  }, [lastExport.timestamp])
   return children
 }
 

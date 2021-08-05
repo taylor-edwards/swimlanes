@@ -24,7 +24,7 @@ const DropZone = forwardRef(({
     if (!dragAndDrop.isDragging || !dropTypeIsCompatible) {
       setIsHovering(false)
     }
-  }, [dragAndDrop, dropTypeIsCompatible])
+  }, [dragAndDrop.isDragging, dropTypeIsCompatible])
 
   const handleDragOver = e => {
     if (dropTypeIsCompatible && type === dragAndDrop.itemType) {
