@@ -62,7 +62,12 @@ const Lane = ({ className = '', id }) => {
 
   return (
     <div className={[styles.lane, className].join(' ')} ref={laneElement}>
-      <div className={styles.content}>
+      <DropZone
+        className={styles.content}
+        type="NOTE"
+        label="Move note"
+        onDrop={handleDrop(0)}
+      >
         <div className={styles.header}>
           {!editing && (
             <>
@@ -113,7 +118,7 @@ const Lane = ({ className = '', id }) => {
             </>
           )}
         </div>
-      </div>
+      </DropZone>
 
       {filteredNotes.map((noteID, i) => (
         <DropZone

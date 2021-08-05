@@ -5,7 +5,7 @@ import Lane from './Lane'
 import styles from '../styles/Lanes.module.scss'
 
 const Lanes = ({ className = '' }) => {
-  const [lanes, addLane, moveLane, setOrder] = useLaneOrder()
+  const [lanes, addLane, moveLane] = useLaneOrder()
   const handleDrop = index => laneID => moveLane(laneID, index)
   return (
     <div className={[styles.container, className].join(' ')}>

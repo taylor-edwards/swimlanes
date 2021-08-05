@@ -4,84 +4,39 @@ import * as selectors from './selectors'
 import { undoableActions } from './middleware'
 
 export const initialState = {
+  laneOrder: ['L000'],
   lanes: {
     L000: {
       id: 'L000',
-      name: 'First lane',
+      name: 'Lane #1',
       noteOrder: [
         'N000',
         'N001',
-        'N002',
       ],
-    },
-    L001: {
-      id: 'L001',
-      name: 'Lane #2',
-      noteOrder: [
-        'N003',
-        'N004',
-      ],
-    },
-    L002: {
-      id: 'L002',
-      name: 'Lane #3',
-      noteOrder: [],
     },
   },
-  laneOrder: [
-    'L000',
-    'L002',
-    'L001',
-  ],
   notes: {
     N000: {
       id: 'N000',
       name: 'My first note',
-      description: 'A sample note (this is the description)',
+      description: 'Click edit to change or delete this note',
       laneID: 'L000',
-      tags: ['motorcycles', 'cat gif'],
+      tags: ['example', 'tag'],
     },
     N001: {
       id: 'N001',
-      name: 'Test note',
+      name: 'Untitled note',
       description: '',
       laneID: 'L000',
-      tags: ['dev', 'cat gif'],
-    },
-    N002: {
-      id: 'N002',
-      name: undefined,
-      description: 'I forgot to type a name for this note',
-      laneID: 'L000',
-      tags: ['motorcycles'],
-    },
-    N003: {
-      id: 'N003',
-      name: 'Recipes for toast',
-      description: 'should notes support a rich text format?',
-      laneID: 'L001',
-      tags: ['cooking'],
-    },
-    N004: {
-      id: 'N004',
-      name: 'oops I did it again',
-      description: undefined,
-      laneID: 'L001',
-      tags: [],
+      tags: ['example'],
     },
   },
   tags: {
-    cooking: {
-      relatedNotes: ['N003'],
-    },
-    dev: {
-      relatedNotes: ['N001'],
-    },
-    motorcycles: {
-      relatedNotes: ['N000', 'N002'],
-    },
-    'cat gif': {
+    example: {
       relatedNotes: ['N000', 'N001'],
+    },
+    tag: {
+      relatedNotes: ['N000'],
     },
   },
   filters: {
