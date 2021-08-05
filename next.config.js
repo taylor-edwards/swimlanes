@@ -1,4 +1,5 @@
 module.exports = {
+  basePath: '/swimlanes',
   reactStrictMode: true,
-  basePath: '/docs',
+  trailingSlash: true,
 }
