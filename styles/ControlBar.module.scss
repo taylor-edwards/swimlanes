@@ -1,13 +1,12 @@
 .bar {
+  align-items: center;
   background: white;
   border-bottom: 1px solid #aaa;
   box-sizing: border-box;
   display: flex;
   grid-gap: 15px;
+  flex-wrap: wrap;
   padding: 7px 15px 8px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 .spacer {
@@ -19,4 +18,17 @@
   line-height: 1;
   margin-right: 4px;
   vertical-align: middle;
+}
+
+.timestamp {
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }

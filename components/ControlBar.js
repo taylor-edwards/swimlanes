@@ -1,10 +1,13 @@
 import { useCache, useUndoRedo } from '../store'
 import Button from './Button'
+import Timestamp from './Timestamp'
 import styles from '../styles/ControlBar.module.scss'
 
 const ControlBar = ({ className = '' }) => {
   const [lastExport, exportCache] = useCache()
   const [undoRedo, undo, redo] = useUndoRedo()
+  // split division by 1024 to preserve first decimal place
+  const lastExportSizeKB = Math.round(lastExport.size / 102.4) / 10
   return (
     <div className={styles.bar}>
       <Button
@@ -33,6 +36,13 @@ const ControlBar = ({ className = '' }) => {
 
       <div className={styles.spacer} />
 
+      {lastExport.timestamp && (
+        <div className={styles.timestamp}>
+          Last exported{' '}
+          <Timestamp date={lastExport.timestamp} />
+          {' '}({lastExportSizeKB}KB)
+        </div>
+      )}
       <Button
         onClick={exportCache}
         title="Export as JSON"
@@ -42,7 +52,7 @@ const ControlBar = ({ className = '' }) => {
         <span className={styles.icon} role="none">
           &#x2913;
         </span>
-        Save
+        Download
       </Button>
     </div>
   )

@@ -48,16 +48,15 @@ const cacheMiddleware = store => next => action => {
       case actions.EXPORT_CACHE:
         try {
           // only supports `action.format === 'json'`
-          const exportableState = pickCacheableState(store.getState())
-          const encodedJSON = encodeURIComponent(JSON.stringify(exportableState))
-          const data = `data:text/json;charset=utf-8,${encodedJSON}`
+          const json = JSON.stringify(pickCacheableState(store.getState()))
           const a = document.createElement('a')
-          a.href = data
+          a.href = `data:text/json;charset=utf-8,${encodeURIComponent(json)}`
           a.download = 'swimlanes.json'
           a.click()
+          action.timestamp = Date.now()
+          action.size = json.length
         } catch (err) {
           console.warn('Could not export swimlanes.json', { err })
-          // store.dispatch(exportError(err.message))
         }
         return next(action)
         break
