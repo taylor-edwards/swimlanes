@@ -50,11 +50,11 @@ const Lane = ({ className = '', id }) => {
     () => filters.tags.length > 0
       ? notes.filter(noteID => {
           for (const tagID of filters.tags) {
-            if (tags[tagID].relatedNotes.includes(noteID)) {
-              return true
+            if (!tags[tagID].relatedNotes.includes(noteID)) {
+              return false
             }
           }
-          return false
+          return true
         })
       : notes,
     [filters, notes, tags],
@@ -130,7 +130,7 @@ const Lane = ({ className = '', id }) => {
           <Note id={noteID} laneID={id} className={styles.note} />
         </DropZone>
       ))}
-      
+
       <DropZone
         type="NOTE"
         label="Copy note"

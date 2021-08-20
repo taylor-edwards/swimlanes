@@ -6,6 +6,21 @@
   margin: 20px;
 }
 
+.buttonKey {
+  --tone: 127, 127, 127;
+  background: rgba(var(--tone), 0.1);
+  border: 1px solid rgba(var(--tone), 0.2);
+  border-bottom: 2px solid rgba(var(--tone), 0.3);
+  border-top: 0;
+  border-radius: 4px;
+  margin: -2px 4px;
+  padding: 2px 8px;
+}
+
+.pressed {
+  --tone: 32, 32, 32;
+}
+
 @media (min-width: 768px) {
   .card {
     margin: 20px 40px;
