@@ -1,10 +1,10 @@
 # Swimlanes
 
-Swimlanes is a simple task board that never transmits your data. Your lanes and
-notes are cached client-side using `localStorage`, and you can export a backup
-for extra control.
+Swimlanes is an easy to use personal task board. Organize your notes into lanes and use tags to
+quickly filter visible notes. Keyboard accessible and mouse friendly, Swimlanes aims to make
+managing tasks and notes a breeze.
 
-Try the app out at [github.io/swimlanes](https://taylor-edwards.github.io/swimlanes/)
+Try the app out at [swimlanes.motoroco.co](https://swimlanes.motoroco.co)
 
 ## Local development
 
@@ -16,19 +16,23 @@ npm install
 npm run dev
 ```
 
-After compiling, the app should be available at
-[localhost:3000/swimlanes](http://localhost:3000/swimlanes/)
+The app should become available at [localhost:3000](http://localhost:3000/).
 
-## Publishing
+## Deploying
 
-Swimlanes is currently hosted on GitHub Pages. Deployment involves building and
-exporting static assets to the `/docs` directory then committing and pushing
-the results to GitHub on the `main` branch.
+Test production images locally with Docker: `docker-compose up --build`.
 
-```bash
-npm run build
-npm run export
+First time deployments require manually creating certificates with `certbot`
+from the host machine:
+
+```
+docker run -it --rm --name certbot \
+    -v "/$(pwd)/deploy/certbot:/etc/letsencrypt" \
+    -v "/$(pwd)/deploy/certbot-lib:/var/lib/letsencrypt" \
+    -p "80:80" \
+    -p "443:443" \
+    certbot/certbot certonly -d calmcact.us
 ```
 
-The app should update within a few minutes at
-[github.io/swimlanes](https://taylor-edwards.github.io/swimlanes/)
+Then use `docker-compose up --detach` to start the application server and 
+proxy, then `docker-compose down` to stop it.
