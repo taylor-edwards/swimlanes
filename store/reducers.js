@@ -1,4 +1,5 @@
 import { insert, merge, omit, omitWhen, rejectEquals, uniq } from '../util'
+import { themes } from '../constants'
 import * as actions from './actions'
 import * as selectors from './selectors'
 import { undoableActions } from './middleware'
@@ -53,6 +54,7 @@ export const initialState = {
     undoCount: 0,
     redoCount: 0,
   },
+  theme: themes.DEFAULT,
 }
 
 const createLane = (id, name = 'New lane', noteOrder = []) => ({
@@ -464,9 +466,17 @@ const restoreState = (state, { restoredState = {}, undoCount, redoCount }) => ({
     redoCount,
   },
 })
+
 const undoRedoReducers = {
   [actions.UNDO]: restoreState,
   [actions.REDO]: restoreState,
+}
+
+const themeReducers = {
+  [actions.SELECT_THEME]: (state, { theme }) => ({
+    ...state,
+    theme: theme ?? state.theme,
+  })
 }
 
 const cacheReducers = {
@@ -488,6 +498,7 @@ const allReducers = {
   ...filterReducers,
   ...dragAndDropReducers,
   ...undoRedoReducers,
+  ...themeReducers,
   ...cacheReducers,
 }
 

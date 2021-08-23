@@ -113,7 +113,7 @@ export const restoreCache = cachedState => ({
 })
 
 export const UNDO = 'UNDO'
-export const undo = () => ({ 
+export const undo = () => ({
   undoCount: 0,
   redoCount: 0,
   restoredState: null,
@@ -126,4 +126,10 @@ export const redo = () => ({
   redoCount: 0,
   restoredState: null,
   type: REDO,
+})
+
+export const SELECT_THEME = 'SELECT_THEME'
+export const selectTheme = theme => ({
+  theme,
+  type: SELECT_THEME,
 })
