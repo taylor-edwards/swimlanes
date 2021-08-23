@@ -1,6 +1,7 @@
 import { useCache, useUndoRedo } from '../store'
 import Button from './Button'
 import FileInput from './FileInput'
+import ThemeSelector from './ThemeSelector'
 import Timestamp from './Timestamp'
 import styles from '../styles/ControlBar.module.scss'
 
@@ -49,6 +50,10 @@ const ControlBar = ({ className = '' }) => {
         </span>
         Redo
       </Button>
+
+      <div className={styles.spacer} />
+
+      <ThemeSelector />
 
       <div className={styles.spacer} />
 

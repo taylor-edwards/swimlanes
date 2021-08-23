@@ -5,7 +5,7 @@ import * as selectors from './selectors'
 const useLens = (selector, ...actionCreators) => {
   const value = useSelector(selector)
   const dispatch = useDispatch()
-  const actionDispatchers = actionCreators.map(actionCreator => 
+  const actionDispatchers = actionCreators.map(actionCreator =>
     (...actionArgs) => dispatch(actionCreator(...actionArgs)),
   )
   return [
@@ -76,4 +76,9 @@ export const useUndoRedo = () => useLens(
   selectors.undoRedo,
   actions.undo,
   actions.redo,
+)
+
+export const useTheme = () => useLens(
+  selectors.theme,
+  actions.selectTheme,
 )
