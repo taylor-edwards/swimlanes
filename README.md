@@ -17,22 +17,3 @@ npm run dev
 ```
 
 The app should become available at [localhost:3000](http://localhost:3000/).
-
-## Deploying
-
-Test production images locally with Docker: `docker-compose up --build`.
-
-First time deployments require manually creating certificates with `certbot`
-from the host machine:
-
-```
-docker run -it --rm --name certbot \
-    -v "/$(pwd)/deploy/certbot:/etc/letsencrypt" \
-    -v "/$(pwd)/deploy/certbot-lib:/var/lib/letsencrypt" \
-    -p "80:80" \
-    -p "443:443" \
-    certbot/certbot certonly -d calmcact.us
-```
-
-Then use `docker-compose up --detach` to start the application server and 
-proxy, then `docker-compose down` to stop it.
