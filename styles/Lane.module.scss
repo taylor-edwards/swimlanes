@@ -1,4 +1,5 @@
 .lane {
+  background: hsla(var(--hsl), 0.02);
   display: flex;
   grid-gap: 20px;
   overflow-x: auto;

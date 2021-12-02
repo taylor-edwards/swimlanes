@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { noop } from '../util'
+import { Emphasis } from './Typography'
 import styles from '../styles/FileInput.module.scss'
 
 const FileInput = ({
@@ -44,8 +45,8 @@ const FileInput = ({
   }
 
   return (
-    <label className={[className, styles.label].join(' ')}>
-      {children}
+    <label className={['btn', styles.label, className].join(' ')}>
+      <Emphasis>{children}</Emphasis>
       <input
         type="file"
         className={styles.input}

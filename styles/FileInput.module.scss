@@ -1,10 +1,6 @@
 @import "./Button.module.scss";
 
 .label {
-  @extend .btn;
-  @extend .emphasis;
-  @extend .slim;
-
   position: relative;
 }
 

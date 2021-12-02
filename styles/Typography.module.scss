@@ -1,0 +1,22 @@
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  &.body,
+  &.caption,
+  &.emphasis,
+  &.heading {
+    max-width: 600px;
+  }
+}
+
+:where(p) {
+  &.body,
+  &.caption,
+  &.emphasis {
+    margin: 0.333em 0 0.5em;
+  }
+}

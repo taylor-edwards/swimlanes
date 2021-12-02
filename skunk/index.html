@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Style test</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Barlow&family=Playfair+Display:ital,wght@1,700&family=Alegreya&family=Montserrat+Alternates:wght@500&family=Urbanist:wght@200;500&family=Open+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="color-picker" id="color-picker">
+      <svg viewBox="0 0 100 100" id="color-area">
+        <defs>
+          <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="swatch-gradient">
+            <stop stop-color="hsl(var(--hue), 0%, 100%)" offset="0%" />
+            <stop stop-color="hsl(var(--hue), 100%, 50%)" offset="100%" />
+          </linearGradient>
+          <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="vignette">
+            <stop stop-color="rgba(0, 0, 0, 0)" offset="0%" />
+            <stop stop-color="rgba(0, 0, 0, 1)" offset="100%" />
+          </linearGradient>
+        </defs>
+        <rect
+          fill="url(#swatch-gradient)"
+          height="100"
+          width="100"
+          x="0"
+          y="0"
+        />
+        <rect
+          fill="url(#vignette)"
+          height="100"
+          width="100"
+          x="0"
+          y="0"
+        />
+        <circle
+          cx="0"
+          cy="0"
+          fill="hsl(var(--hsl))"
+          id="reticle"
+          r="2"
+          stroke="#fff"
+        />
+      </svg>
+
+      <div class="controls">
+        <div class="hue-slider">
+          <input type="range" min="0" max="360" value="0" id="hue" />
+        </div>
+        <div class="swatch-preview"></div>
+        <label>
+          <span>HSL</span>
+          <input type="text" value="hsl(0, 0, 100%)" id="hsl-input" />
+        </label>
+        <label>
+          <span>RGB</span>
+          <input type="text" value="rgb(255, 255, 255)" id="rgb-input" />
+        </label>
+        <label>
+          <span>Hex</span>
+          <input type="text" value="#FFFFFF" id="hex-input" />
+        </label>
+      </div>
+    </div>
+
+    <main>
+      <div class="card default">
+        <div class="pane">
+          <h1>Default Theme</h1>
+          <p class="tags">
+            <span class="tag">#food</span>
+            <span class="tag">#tag</span>
+            <span class="tag">#example</span>
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum lorem ipsum vestibulum. Lorem ipsum
+            dolor sit amet consectitur adipiscing elit, burger cheesecake hotdog
+            with a Pepsi and fries.
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum vestibulum. Phasellus eu tellus commodo,
+            gravida lacus vitae, tincidunt dui.
+          </p>
+          <p class="caption">Last edited 6/12/2021 5:42 PM</p>
+        </div>
+      </div>
+
+      <div class="card yogurt">
+        <svg viewBox="0 0 5000 2000" class="bg-wiggle">
+          <defs>
+            <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="gradient-fill">
+              <stop stop-color="hsla(var(--hsl), 0.8)" offset="0%" />
+              <stop stop-color="hsla(var(--hsl), 0.5)" offset="100%" />
+            </linearGradient>
+
+            <mask id="wiggle-mask" fill="#fff">
+              <path
+                d="M5000,2000 L0,2000 L0,337.955829 C1216.49485,-112.651943 1216.49485,-112.651943 2500,337.955829 C3783.50515,788.563602 3783.50515,788.563602 5000,337.955829 L5000,2000 Z"
+              ></path>
+            </mask>
+
+            <rect
+              id="wiggle"
+              fill="url(#gradient-fill)"
+              mask="url(#wiggle-mask)"
+              x="0"
+              y="0"
+              width="5000"
+              height="2000"
+            ></rect>
+          </defs>
+
+          <use xlink:href="#wiggle"></use>
+          <use xlink:href="#wiggle"></use>
+        </svg>
+
+        <div class="pane frosted-glass">
+          <div class="frosted-glass--bg"></div>
+          <h1>Yogurt in Motion</h1>
+          <p class="caption">Last edited 6/12/2021 5:42 PM</p>
+          <p>
+            Backdrop filter is only supported in Safari and Chrome. Lorem ipsum
+            dolor sit amet consectitur adipiscing elit, burger cheesecake hotdog
+            with a Pepsi and fries.
+          </p>
+          <p>
+            Fusce luctus mi ac bibendum vestibulum. Phasellus eu tellus commodo,
+            gravida lacus vitae, tincidunt dui.
+          </p>
+          <p class="tags">
+            <span class="tag">#food</span>
+            <span class="tag">#tag</span>
+            <span class="tag">#example</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card aero aero--light">
+        <div class="pane frosted-glass">
+          <div class="frosted-glass--bg"></div>
+          <h1>Aero Light</h1>
+          <p class="caption">Last edited 6/12/2021 5:42 PM</p>
+          <p class="text">
+            Fusce luctus mi ac bibendum lorem ipsum vestibulum. Lorem ipsum dolor
+            sit amet consectitur adipiscing elit, burger cheesecake hotdog with a
+            Pepsi and fries.
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum vestibulum. Phasellus eu tellus commodo,
+            gravida lacus vitae, tincidunt dui.
+          </p>
+          <p class="tags">
+            <span class="tag">#food</span>
+            <span class="tag">#tag</span>
+            <span class="tag">#example</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card aero aero--dark">
+        <div class="pane frosted-glass">
+          <div class="frosted-glass--bg"></div>
+          <h1>Aero Dark</h1>
+          <p class="caption">Last edited 6/12/2021 5:42 PM</p>
+          <p class="text">
+            Fusce luctus mi ac bibendum lorem ipsum vestibulum. Lorem ipsum dolor
+            sit amet consectitur adipiscing elit, burger cheesecake hotdog with a
+            Pepsi and fries.
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum vestibulum. Phasellus eu tellus commodo,
+            gravida lacus vitae, tincidunt dui.
+          </p>
+          <p class="tags">
+            <span class="tag">#food</span>
+            <span class="tag">#tag</span>
+            <span class="tag">#example</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card memphis">
+        <div class="pane">
+          <h1>Memphis Theme</h1>
+          <p class="tags">
+            <span class="tag">#food</span>
+            <span class="tag">#tag</span>
+            <span class="tag">#example</span>
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum lorem ipsum vestibulum. Lorem ipsum dolor
+            sit amet consectitur adipiscing elit, burger cheesecake hotdog with a
+            Pepsi and fries.
+          </p>
+          <p class="text">
+            Fusce luctus mi ac bibendum vestibulum. Phasellus eu tellus commodo,
+            gravida lacus vitae, tincidunt dui.
+          </p>
+          <p class="caption">Last edited 6/12/2021 5:42 PM</p>
+        </div>
+      </div>
+    </main>
+
+    <script src="/main.js"></script>
+  </body>
+</html>

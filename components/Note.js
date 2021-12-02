@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNote } from '../store'
 import Button from './Button'
+import Card from './Card'
 import DragTarget from './DragTarget'
 import Input from './Input'
 import Tags from './Tags'
@@ -47,7 +48,7 @@ const Note = ({ className = '', id, laneID }) => {
     e.dataTransfer.setDragImage(noteElement.current, 0, 0)
 
   return (
-    <div className={[styles.note, className].join(' ')} ref={noteElement}>
+    <Card className={[styles.note, className].join(' ')} ref={noteElement}>
       <div className={styles.header}>
         {!editing && (
           <>
@@ -130,7 +131,7 @@ const Note = ({ className = '', id, laneID }) => {
           </>
         )}
       </div>
-    </div>
+    </Card>
   )
 }
 

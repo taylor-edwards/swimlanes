@@ -127,3 +127,9 @@ export const redo = () => ({
   restoredState: null,
   type: REDO,
 })
+
+export const SET_THEME = 'SET_THEME'
+export const setTheme = theme => ({
+  theme,
+  type: SET_THEME,
+})

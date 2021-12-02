@@ -5,6 +5,7 @@ import DragTarget from './DragTarget'
 import DropZone from './DropZone'
 import Input from './Input'
 import Note from './Note'
+import Pane from './Pane'
 import styles from '../styles/Lane.module.scss'
 
 const Lane = ({ className = '', id }) => {

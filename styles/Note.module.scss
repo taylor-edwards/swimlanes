@@ -1,12 +1,13 @@
 .note {
-  background: #eee;
-  border: 1px solid #ccc;
-  border-radius: 3px;
   display: flex;
   flex-direction: column;
-  padding: 10px 15px 14px;
   position: relative;
 }
+
+// .note :global(.card) {
+//   background: hsla(var(--pos), var(--fill-alpha));
+//   color: hsla(var(--neg), var(--stroke-alpha));
+// }
 
 .header {
   display: flex;

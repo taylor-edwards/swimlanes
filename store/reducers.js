@@ -53,6 +53,12 @@ export const initialState = {
     undoCount: 0,
     redoCount: 0,
   },
+  themeSelection: null,
+  // theme: {
+  //   selection: null,
+  //   mode: null,
+  //   color: [155, 25, 48],
+  // }
 }
 
 const createLane = (id, name = 'New lane', noteOrder = []) => ({
@@ -455,6 +461,13 @@ const dragAndDropReducers = {
   }),
 }
 
+const themeReducers = {
+  [actions.SET_THEME]: (state, { theme }) => ({
+    ...state,
+    themeSelection: typeof theme === 'string' ? theme : null,
+  })
+}
+
 const restoreState = (state, { restoredState = {}, undoCount, redoCount }) => ({
   ...state,
   ...restoredState,
@@ -487,6 +500,7 @@ const allReducers = {
   ...tagReducers,
   ...filterReducers,
   ...dragAndDropReducers,
+  ...themeReducers,
   ...undoRedoReducers,
   ...cacheReducers,
 }

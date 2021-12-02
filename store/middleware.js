@@ -27,6 +27,7 @@ const pickCacheableState = state => ({
   lastExport: state.lastExport,
   notes: state.notes,
   tags: state.tags,
+  themeSelection: state.themeSelection,
 })
 
 const cacheMiddleware = store => next => action => {

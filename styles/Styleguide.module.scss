@@ -1,0 +1,52 @@
+.samples {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.styleguide {
+  flex-basis: 50%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.swatches > * {
+  align-items: center;
+  display: inline-flex;
+  height: 150px;
+  justify-content: center;
+}
+
+.swatchEm {
+  background: hsl(var(--hsl));
+  color: hsl(var(--text));
+}
+
+.swatchPos {
+  background: hsl(var(--neg));
+  color: hsl(var(--pos));
+}
+
+.swatchNeg {
+  background: hsl(var(--pos));
+  color: hsl(var(--neg));
+}
+
+.card {
+  margin: 26px 30px 30px;
+}
+
+.row {
+  align-items: baseline;
+  display: flex;
+  grid-gap: 18px;
+  margin-top: 1em;
+}
+
+.heading {
+  text-transform: capitalize;
+}

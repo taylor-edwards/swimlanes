@@ -1,4 +1,5 @@
-import { useCache, useUndoRedo } from '../store'
+import { THEMES } from '../constants'
+import { useCache, useTheme, useUndoRedo } from '../store'
 import Button from './Button'
 import FileInput from './FileInput'
 import Timestamp from './Timestamp'
@@ -7,6 +8,9 @@ import styles from '../styles/ControlBar.module.scss'
 const ControlBar = ({ className = '' }) => {
   const [lastExport, exportCache, restoreCache] = useCache()
   const [undoRedo, undo, redo] = useUndoRedo()
+  const [selectedTheme, setTheme] = useTheme()
+
+  const selectTheme = e => setTheme(e.target.value)
 
   // split division by 1024 to preserve first decimal place
   const lastExportSizeKB = Math.round(lastExport.size / 102.4) / 10
@@ -49,6 +53,16 @@ const ControlBar = ({ className = '' }) => {
         </span>
         Redo
       </Button>
+
+      <div className={styles.spacer} />
+
+      <select value={selectedTheme ?? 'classic'} onChange={selectTheme}>
+        {Object.keys(THEMES).map(theme => (
+          <option key={theme} value={theme}>
+            {theme}
+          </option>
+        ))}
+      </select>
 
       <div className={styles.spacer} />
 

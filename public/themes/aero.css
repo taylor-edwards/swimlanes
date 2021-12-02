@@ -1,0 +1,137 @@
+@import "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500&family=Barlow:wght@400&family=Urbanist:wght@200&display=swap";
+
+.aero {
+  --body-font-family: 'Barlow', sans-serif;
+  --body-font-size: 18px;
+  --body-font-weight: 400;
+  --body-line-height: 1.333;
+
+  --heading-font-family: 'Urbanist', sans-serif;
+  --heading-font-size: 26px;
+  --heading-font-weight: 200;
+  --heading-letter-spacing: 0.04em;
+  --heading-line-height: 1.05;
+
+  --caption-font-family: 'Barlow Semi Condensed', sans-serif;
+  --caption-font-size: 14px;
+  --caption-font-weight: 500;
+  --caption-letter-spacing: 0.06em;
+  --caption-line-height:  18px;
+  --caption-text-transform: uppercase;
+
+  --emphasis-font-weight: 500;
+  --emphasis-letter-spacing: 0.03em;
+}
+
+.aero .pane {
+  background:
+    linear-gradient(
+      180deg,
+      hsla(var(--neg), 0.3),
+      hsla(var(--neg), 0.98)
+    ),
+    linear-gradient(
+      105deg,
+      hsla(var(--hsl), 0.05),
+      hsla(var(--hsl), 0) 50%,
+      hsla(var(--hsl), 0.6) calc(50% + 1px),
+      hsla(var(--hsl), 0.4) 55%,
+      hsla(var(--hsl), 0.3) 65%,
+      hsla(var(--hsl), 0.05) 80%,
+      hsla(var(--hsl), 0)
+    ),
+    linear-gradient(hsl(var(--neg)), hsl(var(--neg)));
+}
+
+.aero .card {
+  box-shadow:
+    inset 0 0 150px hsla(var(--neg), 0.2),
+    5px 10px 20px -10px hsla(var(--pos), 0.15),
+    -5px -10px 20px -10px hsla(var(--neg), 0.1);
+  color: var(--stroke);
+  position: relative;
+  z-index: 1;
+}
+
+.aero .card::before {
+  backdrop-filter: blur(3px) saturate(200%);
+  background: hsla(var(--neg), 0.5);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.aero .btn {
+  --stroke: hsla(var(--pos), var(--stroke-alpha));
+  --reflection-point: 45%;
+  --reflection-angle: 0deg;
+  --emphasis-font-weight: 500;
+  background:
+    linear-gradient(
+      var(--reflection-angle),
+      hsla(var(--hsl), 0.2),
+      hsla(var(--hsl), 0) var(--reflection-point),
+      hsla(var(--hsl), 0.7) calc(var(--reflection-point) + 1px),
+      hsla(var(--hsl), 0.4) calc(var(--reflection-point) + 3px),
+      hsla(var(--hsl), 0)
+    );
+  border-bottom: 1px solid hsl(var(--neg));
+  border-radius: 100px;
+  color: var(--stroke);
+  line-height: 1;
+  padding: 3px 24px 4px;
+  position: relative;
+  box-shadow:
+    0 -1px 1px -1px hsl(var(--neg)),
+    0 1px 1px -1px hsla(var(--pos), 0.5),
+    0 -1px 3px -1px hsla(var(--hsl), 0.4),
+    0 1px 3px -1px hsla(var(--pos), 0.2);
+  text-shadow:
+    0 0 6px hsla(var(--neg), 0.8),
+    0 0 9px hsla(var(--neg), 0.6),
+    0 0 12px hsla(var(--neg), 0.4);
+}
+.aero .btn:hover,
+.aero .btn:focus {
+  color: hsla(var(--hsl), 1);
+}
+.aero .btn:active {
+  --reflection-angle: 180deg;
+  --reflection-point: 44%;
+  box-shadow:
+    0 -1px 1px -1px hsl(var(--neg)),
+    0 1px 1px -1px hsla(var(--pos), 0.2),
+    0 -1px 3px -1px hsla(var(--hsl), 0.1),
+    0 1px 3px -1px hsla(var(--pos), 0.4),
+    inset 0 1px 12px 3px hsla(var(--hsl), 0.1),
+    inset 0 -1px 3px -1px hsla(var(--pos), 0.3);
+}
+.aero .btn::before,
+.aero .btn::after {
+  background: linear-gradient(
+    var(--angle),
+    hsla(var(--hsl), 0.4),
+    hsla(var(--hsl), 0) 35%
+  );
+  border-radius: 100%;
+  box-sizing: border-box;
+  content: "";
+  height: 24px;
+  margin: 1px 2px;
+  position: absolute;
+  width: 24px;
+}
+.aero .btn::after {
+  --angle: -135deg;
+  top: 0;
+  right: 0;
+}
+.aero .btn::before {
+  --angle: 135deg;
+  left: 0;
+  top: 0;
+}

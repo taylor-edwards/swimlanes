@@ -1,0 +1,47 @@
+@import "https://fonts.googleapis.com/css2?family=Urbanist:wght@200&family=Open+Sans:wght@400&display=swap";
+
+.default {
+  --body-font-family: 'Open Sans', serif;
+  --body-font-size: 16px;
+  --body-font-weight: 400;
+  --body-letter-spacing: 1.6;
+  --body-line-height: 1.6;
+
+  --heading-font-family: 'Urbanist', serif;
+  --heading-font-size: 26px;
+  --heading-font-weight: 200;
+  --heading-line-height: 1.1;
+
+  --caption-font-size: 14px;
+  --caption-letter-spacing: 0.03em;
+  --caption-line-height: 22px;
+  --caption-alpha: 0.7;
+}
+
+.default .pane {
+  background:
+    linear-gradient(hsla(var(--hsl), 0.2), hsla(var(--hsl), 0.2)),
+    linear-gradient(hsl(var(--neg)), hsl(var(--neg)));
+}
+
+.default .card {
+  background: hsla(var(--neg), var(--fill-alpha));
+  color: var(--stroke);
+}
+
+.default .btn {
+  --stroke: hsla(var(--hsl), var(--stroke-alpha));
+  background: hsla(var(--neg), var(--btn-alpha));
+  border-radius: 5px;
+  border: 1px solid;
+  color: var(--stroke);
+}
+
+.default .btn:hover,
+.default .btn:focus {
+  --fill: hsla(var(--hsl), var(--fill-alpha));
+  --stroke: hsla(var(--text), var(--stroke-alpha));      
+  background: var(--fill);
+  border-color: hsl(var(--hsl));
+  color: var(--stroke);
+}

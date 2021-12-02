@@ -1,0 +1,674 @@
+h1, h2, h3, h4, h5, h6,
+p, span, ol, ul, li, dl, dt, dd,
+a, button, input, select, textarea {
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-style: none;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+:root {
+  --body-font-family: sans-serif;
+  --body-font-size: 16px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --body-line-height: 22px;
+  --body-text-transform: none;
+  --body-alpha: 1;
+
+  --heading-font-family: inherit;
+  --heading-font-size: inherit;
+  --heading-font-style: inherit;
+  --heading-font-weight: inherit;
+  --heading-letter-spacing: inherit;
+  --heading-line-height: inherit;
+  --heading-text-transform: none;
+  --heading-alpha: 1;
+
+  --caption-font-family: inherit;
+  --caption-font-size: inherit;
+  --caption-font-style: inherit;
+  --caption-font-weight: inherit;
+  --caption-letter-spacing: inherit;
+  --caption-line-height: inherit;
+  --caption-text-transform: none;
+  --caption-alpha: 1;
+
+  --link-font-family: inherit;
+  --link-font-size: inherit;
+  --link-font-style: inherit;
+  --link-font-weight: inherit;
+  --link-letter-spacing: inherit;
+  --link-line-height: inherit;
+  --link-text-transform: none;
+  --link-alpha: 1;
+
+  /**
+   * These are partial color variables in HSL format. Example usage:
+   * ```
+   *   background: hsla(var(--fill), 0.1);
+   *   color: hsl(var(--fill));
+   * ```
+   **/
+  --hue: 190deg;
+  --bg-alpha: 1;
+  --text-alpha: 1;
+  --fill: var(--hue), 60%, 43%;
+  --stroke: var(--hue), 85%, 15%;
+  --text: var(--hue), 10%, 95%;
+}
+
+/**
+ * Write reusable CSS once for all themes with heavy variable usage
+ **/
+
+/* Colors */
+.text--current {
+  color: hsla(var(--text), var(--text-alpha));
+}
+
+.text--light {
+  color: hsla(var(--hue), 5%, 99%, var(--text-alpha));
+}
+
+.text--dark {
+  color: hsla(var(--hue), 75%, 10%, var(--text-alpha));
+}
+
+.text--bright {
+  color: hsla(var(--fill), var(--text-alpha));
+}
+
+.text--deep {
+  color: hsla(var(--hue), 75%, 20%, var(--text-alpha));
+}
+
+.fill--current {
+  @extend .text--current;
+  background: hsla(var(--fill), var(--bg-alpha));
+}
+
+.fill--light {
+  @extend .text--dark;
+  background: hsla(var(--hue), 5%, 99%, var(--bg-alpha));
+}
+
+.fill--dark {
+  @extend .text--light;
+  background: hsla(var(--hue), 75%, 10%, var(--bg-alpha));
+}
+
+.fill--bright {
+  @extend .text--light;
+  background: hsla(var(--hue), 85%, 48%, var(--bg-alpha));
+}
+
+.fill--deep {
+  @extend .text--light;
+  background: hsla(var(--hue), 100%, 30%, var(--bg-alpha));
+}
+
+/* Typography */
+.body {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
+  font-style: var(--body-font-style);
+  font-weight: var(--body-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--body-line-height);
+  opacity: var(--body-alpha);
+  text-transform: var(--body-text-transform);
+}
+
+.heading {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size);
+  font-style: var(--heading-font-style);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--heading-letter-spacing);
+  line-height: var(--heading-line-height);
+  opacity: var(--heading-alpha);
+  text-transform: var(--heading-text-transform);
+}
+
+.caption {
+  font-family: var(--caption-font-family);
+  font-size: var(--caption-font-size);
+  font-style: var(--caption-font-style);
+  font-weight: var(--caption-font-weight);
+  letter-spacing: var(--caption-letter-spacing);
+  line-height: var(--caption-line-height);
+  opacity: var(--caption-alpha);
+  text-transform: var(--caption-text-transform);
+}
+
+.btn,
+.link {
+  font-family: var(--link-font-family);
+  font-size: var(--link-font-size);
+  font-style: var(--link-font-style);
+  font-weight: var(--link-font-weight);
+  letter-spacing: var(--link-letter-spacing);
+  line-height: var(--link-line-height);
+  opacity: var(--link-alpha);
+  text-transform: var(--link-text-transform);
+}
+
+body {
+  @extend .body;
+  @extend .fill--light;
+}
+
+.body--wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+p {
+  margin: 0.333em 0;
+  max-width: 600px;
+}
+
+.btn,
+.link {
+  cursor: pointer;
+  &::selection {
+    display: none;
+  }
+}
+
+.link {
+  @extend .text--bright;
+  transition: color 100ms ease-in;
+  &:hover,
+  &:focus {
+    @extend .text--deep;
+  }
+  &:active {
+    @extend .text--current;
+  }
+}
+
+.btn {
+  // @extend .fill--current;
+  // display: inline-flex;
+  // border-radius: 100px; // force pill shape up to 100px tall
+  // justify-content: center;
+  // padding: 3px 18px 4px;
+  // transition: background 100ms ease-in;
+  // &:hover,
+  // &:focus {
+  //   @extend .fill--deep;
+  // }
+  // &:active {
+  //   @extend .fill--dark;
+  // }
+}
+
+.swatch {
+  align-items: center;
+  display: inline-flex;
+  height: 200px;
+  justify-content: center;
+  width: 200px;
+}
+
+.pane {
+  display: inline-block;
+  margin: 26px 30px 30px;
+  padding: 14px 24px;
+}
+
+.pane--wrapper {
+  position: relative;
+}
+
+.row {
+  align-items: baseline;
+  display: flex;
+  grid-gap: 18px;
+  margin: 12px 0;
+}
+
+/**
+ * Create themes
+ **/
+
+.frosted-glass {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  box-shadow: 5px 10px 20px -10px rgba(0, 0, 0, 0.3),
+    -5px -10px 20px -10px rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 1;
+}
+
+.frosted-glass--bg {
+  -webkit-backdrop-filter: blur(3px) saturate(200%);
+  backdrop-filter: blur(3px) saturate(200%);
+  background: rgba(255, 255, 255, 0.7);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.default {
+  --body-font-family: 'Open Sans', serif;
+  --body-font-size: 16px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 1.6;
+  --body-line-height: 1.6;
+  --body-text-transform: none;
+
+  --heading-font-family: 'Urbanist', serif;
+  --heading-font-size: 26px;
+  --heading-font-style: normal;
+  --heading-font-weight: 200;
+  --heading-line-height: 1.1;
+  --heading-text-transform: none;
+
+  --caption-font-size: 14px;
+  --caption-font-style: normal;
+  --caption-font-weight: 500;
+  --caption-letter-spacing: 0.03em;
+  --caption-line-height: 22px;
+  --caption-text-transform: none;
+  --caption-alpha: 0.7;
+
+  --link-alpha: 1;
+
+  .body,
+  &.body {
+    background:
+      linear-gradient(hsla(var(--fill), 0.2), hsla(var(--fill), 0.2)),
+      linear-gradient(#fff, #fff);
+  }
+  .pane {
+    @extend .fill--light;
+  }
+}
+
+.yogurt {
+  --body-font-family: 'Barlow Semi Condensed', sans-serif;
+  --body-font-size: 18px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --body-line-height: 24px;
+  --body-text-transform: none;
+
+  --heading-font-size: 26px;
+  --heading-font-weight: 600;
+  --heading-line-height: 36px;
+  --heading-text-transform: none;
+
+  --caption-alpha: 0.8;
+
+  --link-font-weight: 500;
+  --link-alpha: 1;
+
+  .body,
+  &.body {
+    background:
+      linear-gradient(135deg, hsla(var(--fill), 0.7), hsla(var(--fill), 0.2)),
+      linear-gradient(#fff, #fff);
+  }
+
+  .bg-wiggle {
+    bottom: 0;
+    left: 0;
+    max-height: 80%;
+    min-height: 40%;
+    position: absolute;
+    width: 100%;
+  }
+
+  .bg-wiggle use:nth-child(odd) {
+    animation: slideOutLeft 75s linear infinite;
+    transform: translateX(0%);
+  }
+
+  .bg-wiggle use:nth-child(even) {
+    animation: slideInLeft 75s linear infinite;
+    transform: translateX(100%);
+  }
+
+  .pane {
+    @extend .frosted-glass;
+  }
+  .pane::before {
+    @extend .frosted-glass--bg;
+    content: "";
+  }
+}
+
+.aero-light,
+.aero-dark {
+  --body-font-family: 'Barlow', sans-serif;
+  --body-font-size: 18px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --body-line-height: 1.333;
+  --body-text-transform: none;
+
+  --heading-font-family: 'Urbanist', sans-serif;
+  --heading-font-size: 26px;
+  --heading-font-style: normal;
+  --heading-font-weight: 200;
+  --heading-letter-spacing: 0.04em;
+  --heading-line-height: 1.05;
+  --heading-text-transform: none;
+
+  --caption-font-family: 'Barlow Semi Condensed', sans-serif;
+  --caption-font-size: 14px;
+  --caption-font-weight: 500;
+  --caption-letter-spacing: 0.06em;
+  --caption-text-transform: uppercase;
+
+  --link-alpha: 1;
+
+  .pane {
+    @extend .frosted-glass;
+    box-shadow: inset 0 0 150px rgba(255, 255, 255, 0.08);
+  }
+  .pane::before {
+    @extend .frosted-glass--bg;
+    content: "";
+  }
+  .pane > * {
+    --bg-alpha: 1;
+  }
+  .btn {
+    --reflection-point: 45%;
+    --reflection-angle: 0deg;
+    --link-font-weight: 500;
+    border-radius: 100px;
+    line-height: 1;
+    padding: 3px 24px 4px;
+    position: relative;
+
+    &::before,
+    &::after {
+      border-radius: 100%;
+      box-sizing: border-box;
+      content: "";
+      height: 24px;
+      margin: 1px 2px;
+      position: absolute;
+      width: 24px;
+    }
+    &::after {
+      --angle: -135deg;
+      top: 0;
+      right: 0;
+    }
+    &::before {
+      --angle: 135deg;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+.aero-light {
+  .body,
+  &.body {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 1)
+      ),
+      linear-gradient(
+        105deg,
+        hsla(var(--fill), 0.05),
+        hsla(var(--fill), 0) 50%,
+        hsla(var(--fill), 0.3) calc(50% + 1px),
+        hsla(var(--fill), 0.2) 55%,
+        hsla(var(--fill), 0.1) 65%,
+        hsla(var(--fill), 0.05) 80%,
+        hsla(var(--fill), 0)
+      ),
+      linear-gradient(#fff, #fff);
+  }
+  .pane--wrapper {
+    --bg-alpha: 0;
+  }
+  .pane {
+    @extend .fill--light;
+    border: 1px solid hsla(var(--fill), 0.05);
+    box-shadow:
+      5px 10px 20px -10px rgba(0, 0, 0, 0.15),
+      -5px -10px 20px -10px rgba(255, 255, 255, 0.1);
+  }
+  .btn {
+    --reflection-angle: 180deg;
+    background:
+      linear-gradient(
+        var(--reflection-angle),
+        hsla(var(--fill), 0.2),
+        hsla(var(--fill), 0) var(--reflection-point),
+        hsla(var(--fill), 0.6) calc(var(--reflection-point) + 1px),
+        hsla(var(--fill), 0.3) calc(var(--reflection-point) + 4px),
+        hsla(var(--fill), 0.1)
+      ),
+      linear-gradient(
+        var(--reflection-angle),
+        rgba(0, 0, 0, 0) 35%,
+        #fff 95%
+      );
+    border-bottom: 1px solid #fafafa;
+    box-shadow:
+      0 -1px 1px -1px #fff,
+      0 1px 1px -1px rgba(0, 0, 0, 0.5),
+      0 -1px 3px -1px hsla(var(--fill), 0.4),
+      0 1px 3px -1px rgba(0, 0, 0, 0.2);
+    color: #000;
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.7),
+      0 0 8px rgba(255, 255, 255, 0.6),
+      0 0 10px rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      color: hsl(var(--hue), 100%, 35%);
+    }
+    &:active {
+      --reflection-angle: 0deg;
+      --reflection-point: 44%;
+      box-shadow:
+        0 -1px 1px -1px #fff,
+        0 1px 1px -1px rgba(0, 0, 0, 0.2),
+        0 -1px 3px -1px hsla(var(--hsl), 0.1),
+        0 1px 3px -1px rgba(0, 0, 0, 0.4),
+        inset 0 1px 12px 3px hsla(var(--hsl), 0.1),
+        inset 0 -1px 3px -1px rgba(0, 0, 0, 0.3);
+    }
+    &::before,
+    &::after {
+      background: linear-gradient(
+        var(--angle),
+        hsla(var(--fill), 0.4),
+        hsla(var(--fill), 0) 35%
+      );
+    }
+  }
+}
+
+.aero-dark {
+  .body,
+  &.body, {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 10%,
+        rgba(0, 0, 0, 1)
+      ),
+      linear-gradient(
+        105deg,
+        hsla(var(--fill), 0.25),
+        hsla(var(--fill), 0) 50%,
+        hsla(var(--fill), 0.7) calc(50% + 1px),
+        hsla(var(--fill), 0.5) 55%,
+        hsla(var(--fill), 0.3) 65%,
+        hsla(var(--fill), 0.05) 80%,
+        hsla(var(--fill), 0)
+      ),
+      linear-gradient(#000, #000);
+    color: hsl(var(--hue), 5%, 95%);
+  }
+  .pane--wrapper {
+    --bg-alpha: 0.5;
+  }
+  .pane {
+    @extend .fill--dark;
+    border: 1px solid hsla(var(--fill), 0.25);
+    box-shadow:
+      5px 10px 20px -10px rgba(0, 0, 0, 0.3),
+      -5px -10px 20px -10px rgba(255, 255, 255, 0.1);
+  }
+  .pane::before {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.6),
+      rgba(32, 32, 32, 0.5)
+    );
+  }
+  .link {
+    &:hover,
+    &:focus {
+      @extend .text--light;
+    }
+    &:focus {
+      @extend .text--bright;
+    }
+  }
+  .btn {
+    background:
+      linear-gradient(
+        var(--reflection-angle),
+        hsla(var(--fill), 0.2),
+        hsla(var(--fill), 0) var(--reflection-point),
+        hsla(var(--fill), 0.6) calc(var(--reflection-point) + 1px),
+        hsla(var(--fill), 0.3) calc(var(--reflection-point) + 4px),
+        hsla(var(--fill), 0.1)
+      ),
+      linear-gradient(
+        var(--reflection-angle),
+        rgba(0, 0, 0, 0) 35%,
+        #000 95%
+      );
+    border-bottom: 1px solid #5a5a5a;
+    box-shadow:
+      0 -1px 1px -1px #fff,
+      0 1px 1px -1px #000,
+      0 -1px 3px -1px hsla(var(--fill), 0.4),
+      0 1px 3px -1px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-shadow:
+      0 0 5px rgba(0, 0, 0, 0.7),
+      0 0 8px rgba(0, 0, 0, 0.6),
+      0 0 10px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      color: hsl(var(--hue), 100%, 75%);
+    }
+    &:active {
+      --reflection-angle: 180deg;
+      --reflection-point: 52%;
+      box-shadow:
+        0 -1px 1px -1px #fff,
+        0 1px 1px -1px #000,
+        0 -1px 3px -1px hsla(var(--hsl), 0.2),
+        0 1px 3px -1px rgba(0, 0, 0, 0.4),
+        inset 0 1px 12px 3px hsla(var(--hsl), 0.2),
+        inset 0 -1px 3px -1px rgba(0, 0, 0, 0.4);
+    }
+    &::before,
+    &::after {
+      background: linear-gradient(
+        var(--angle),
+        hsla(var(--fill), 0.8),
+        hsla(var(--fill), 0) 35%
+      );
+    }
+  }
+}
+
+.memphis {
+  --body-font-family: 'Alegreya', serif;
+  --body-font-size: 20px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --body-line-height: 22px;
+  --body-text-transform: none;
+
+  --heading-font-family: 'Playfair Display', serif;
+  --heading-font-size: 30px;
+  --heading-font-style: italic;
+  --heading-font-weight: 700;
+  --heading-letter-spacing: 0;
+  --heading-line-height: 1.1;
+  --heading-text-transform: none;
+
+  --caption-font-family: 'Monsterrat Alternates', sans-serif;
+  --caption-font-size: 14px;
+  --caption-font-style: normal;
+  --caption-font-weight: 400;
+  --caption-letter-spacing: 0.06em;
+  --caption-text-transform: uppercase;
+
+  --link-font-family: 'Monsterrat Alternates', sans-serif;
+  --link-font-size: 14px;
+  --link-font-style: normal;
+  --link-font-weight: 400;
+  --link-letter-spacing: 0.02em;
+  --link-line-height: 23px;
+
+  .body,
+  &.body {
+    background: url('/memphis-colorful.png');
+  }
+  .pane {
+    @extend .fill--light;
+    box-shadow: 0 5px 10px -7px rgba(0, 0, 0, 0.5);
+  }
+  .caption {
+    @extend .text--bright;
+  }
+}
+
+.styleguide {
+  padding-bottom: 500px;
+}

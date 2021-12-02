@@ -1,0 +1,101 @@
+@import "https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Barlow:wght@400;500&family=Playfair+Display:ital,wght@1,700&family=Alegreya&family=Montserrat+Alternates:wght@500&family=Urbanist:wght@200;500&family=Open+Sans:wght@400;500&display=swap";
+
+.yogurt {
+  --body-font-family: 'Barlow', sans-serif;
+  --body-font-size: 18px;
+  --body-font-weight: 400;
+  --body-line-height: 24px;
+
+  --heading-font-family: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-size: 26px;
+  --heading-font-weight: 600;
+  --heading-line-height: 36px;
+
+  --caption-font-family: 'Barlow', sans-serif;
+  --caption-font-size: 14px;
+  --caption-font-weight: 500;
+  --caption-letter-spacing: 0.03em;
+  --caption-line-height: 16px;
+  --caption-alpha: 0.8;
+  --caption-word-spacing: 0.04em;
+
+  --emphasis-font-weight: 500;
+}
+
+.yogurt .pane {
+  --stroke: hsla(var(--pos), var(--stroke-alpha));
+  background:
+    linear-gradient(135deg, hsla(var(--hsl), 0.7), hsla(var(--hsl), 0.2)),
+    linear-gradient(hsl(var(--neg)), hsl(var(--neg)));
+  color: var(--stroke);
+}
+
+.yogurt .card {
+  box-shadow:
+     5px  10px 20px -10px hsla(var(--pos), 0.3),
+    -5px -10px 20px -10px hsla(var(--neg), 0.7);
+  position: relative;
+  z-index: 1;
+}
+
+.yogurt .card::before {
+  backdrop-filter: blur(3px) saturate(200%);
+  background: hsla(var(--neg), 0.75);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.yogurt .bg-wiggle {
+  bottom: 0;
+  filter: hue-rotate(-5deg) brightness(130%);
+  left: 0;
+  max-height: 80%;
+  min-height: 40%;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.yogurt .bg-wiggle use:nth-child(odd) {
+  animation: slideOutLeft 60s linear infinite;
+  transform: translateX(0%);
+}
+
+.yogurt .bg-wiggle use:nth-child(even) {
+  animation: slideInLeft 60s linear infinite;
+  transform: translateX(100%);
+}
+
+.yogurt .btn {
+  border-bottom: 1px solid hsla(var(--hue), 100%, 10%, 0.2);
+  border-top: 1px solid hsla(var(--hue), 20%, 95%, 0.2);
+  box-shadow:
+    0 -5px 10px hsla(var(--hue), 20%, 95%, 0.2),
+    0 5px 10px hsla(var(--hue), 100%, 0%, 0.2);
+  text-shadow:
+    0 -2px 3px hsla(var(--hue), 20%, 95%, 0.4),
+    0 2px 3px hsla(var(--hue), 100%, 0%, 0.4);
+}

@@ -1,11 +1,6 @@
 import { forwardRef } from 'react'
+import { Emphasis } from './Typography'
 import styles from '../styles/Button.module.scss'
-
-const styleTypes = {
-  default: styles.default,
-  emphasis: styles.emphasis,
-  pill: styles.pill,
-}
 
 const Button = ({
   children,
@@ -17,8 +12,7 @@ const Button = ({
 }, ref) => (
   <button
     className={[
-      styles.btn,
-      styleTypes[type],
+      'btn',
       active ? styles.active : '',
       slim ? styles.slim : '',
       className,
@@ -26,7 +20,7 @@ const Button = ({
     {...props}
     ref={ref}
   >
-    {children}
+    <Emphasis>{children}</Emphasis>
   </button>
 )
 

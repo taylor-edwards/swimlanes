@@ -1,36 +1,231 @@
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    Verdana, Tahoma, sans-serif;
   line-height: 1.5;
   margin: 0;
   padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4{
-  margin: 0;
+* {
+  scroll-behavior: smooth;
 }
 
-p {
-  margin: 0.5em 0 1em;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button,
-input,
-textarea {
+h1, h2, h3, h4, h5, h6,
+p, span, ol, ul, li, dl, dt, dd, a,
+button, input, textarea, select, option {
   appearance: none;
-  background: none;
+  background: transparent;
   border: 0;
   color: inherit;
-  cursor: pointer;
   font: inherit;
+  letter-spacing: inherit;
   line-height: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  text-decoration: none;
+  text-style: none;
+  text-transform: none;
 }
+
+:root {
+  --body-font-family: sans-serif;
+  --body-font-size: 16px;
+  --body-font-style: normal;
+  --body-font-weight: 400;
+  --body-letter-spacing: 0;
+  --body-line-height: 22px;
+  --body-alpha: 1;
+  --body-text-transform: none;
+  --body-word-spacing: 0;
+
+  --heading-font-size: 20px;
+  --heading-font-style: inherit;
+  --heading-font-weight: bold;
+  --heading-letter-spacing: inherit;
+  --heading-line-height: inherit;
+  --heading-alpha: 1;
+  --heading-text-transform: none;
+  --heading-word-spacing: 0;
+  --heading-font-family: inherit;
+
+  --caption-font-family: inherit;
+  --caption-font-size: inherit;
+  --caption-font-style: inherit;
+  --caption-font-weight: inherit;
+  --caption-letter-spacing: inherit;
+  --caption-line-height: inherit;
+  --caption-alpha: 0.7;
+  --caption-text-transform: none;
+  --caption-word-spacing: 0;
+
+  --emphasis-font-size: inherit;
+  --emphasis-font-style: inherit;
+  --emphasis-font-weight: inherit;
+  --emphasis-letter-spacing: inherit;
+  --emphasis-line-height: inherit;
+  --emphasis-alpha: 1;
+  --emphasis-text-transform: none;
+  --emphasis-word-spacing: 0;
+  --emphasis-font-family: inherit;
+
+  --btn-alpha: 1;
+  --link-alpha: 1;
+  --fill-alpha: 1;
+  --stroke-alpha: 1;
+
+  --hue: 209deg;
+  --saturation: 56%;
+  --lightness: 54%;
+
+  --hsl: var(--hue), var(--saturation), var(--lightness);
+  // --text: var(--hue), var(--saturation), calc(1/var(--lightness));
+
+  @extend .light;
+}
+
+.deepen {
+  --hsl: var(--hue),
+    calc(var(--saturation) * 1.1),
+    calc(var(--lightness) * 0.85);
+}
+
+.brighten {
+  --hsl: var(--hue),
+    calc(var(--saturation) * 0.8),
+    calc(var(--lightness) * 1.25);
+}
+
+.light {
+  --pos: var(--hue), 90%, 10%;
+  --neg: var(--hue), 5%, 95%;
+}
+
+.dark {
+  --pos: var(--hue), 5%, 95%;
+  --neg: var(--hue), 45%, 6%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pos: var(--hue), 5%, 95%;
+    --neg: var(--hue), 45%, 6%;
+  }
+}
+
+.pane {
+  background: hsla(var(--neg), var(--fill-alpha));
+  color: hsla(var(--pos), var(--fill-alpha));
+}
+
+.link {
+  color: hsla(var(--hue), 70%, 35%, var(--link-alpha));
+  cursor: pointer;
+
+  &:hover:not(:active),
+  &:focus:not(:active) {
+    color: hsla(var(--hue), 100%, 10%, 1);
+  }
+
+  .dark & {
+    color: hsla(var(--hue), 60%, 75%, var(--link-alpha));
+
+    &:hover:not(:active),
+    &:focus:not(:active) {
+      color: hsla(var(--hue), 60%, 60%, 1);
+    }
+  }
+}
+
+.btn {
+  --fill-alpha: var(--btn-alpha);
+  --fill: hsla(var(--hsl), var(--fill-alpha));
+  --stroke: hsla(var(--neg), var(--stroke-alpha));
+  background: var(--fill);
+  color: var(--stroke);
+  cursor: pointer;
+  border-radius: 100px; // force pill shape up to 100px tall
+  padding: 3px 18px 4px;
+
+  &:hover,
+  &:focus {
+    --fill: hsla(
+      var(--hue),
+      calc(var(--saturation) * 1.5),
+      calc(var(--lightness) / 1.4),
+      1
+    );
+  }
+  &:active {
+    --fill: hsla(
+      var(--hue),
+      calc(var(--saturation) * 2),
+      calc(var(--lightness) / 1.8),
+      1
+    );
+  }
+}
+
+.body {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size);
+  font-style: var(--body-font-style);
+  font-weight: var(--body-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--body-line-height);
+  opacity: var(--body-alpha);
+  text-transform: var(--body-text-transform);
+  word-spacing: var(--body-word-spacing);
+}
+
+.caption {
+  font-family: var(--caption-font-family);
+  font-size: var(--caption-font-size);
+  font-style: var(--caption-font-style);
+  font-weight: var(--caption-font-weight);
+  letter-spacing: var(--caption-letter-spacing);
+  line-height: var(--caption-line-height);
+  opacity: var(--caption-alpha);
+  text-transform: var(--caption-text-transform);
+  word-spacing: var(--caption-word-spacing);
+}
+
+.emphasis {
+  font-family: var(--emphasis-font-family);
+  font-size: var(--emphasis-font-size);
+  font-style: var(--emphasis-font-style);
+  font-weight: var(--emphasis-font-weight);
+  letter-spacing: var(--emphasis-letter-spacing);
+  line-height: var(--emphasis-line-height);
+  opacity: var(--emphasis-alpha);
+  text-transform: var(--emphasis-text-transform);
+  word-spacing: var(--emphasis-word-spacing);
+}
+
+.heading {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size);
+  font-style: var(--heading-font-style);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--heading-letter-spacing);
+  line-height: var(--heading-line-height);
+  opacity: var(--heading-alpha);
+  text-transform: var(--heading-text-transform);
+  word-spacing: var(--heading-word-spacing);
+}
+
+body {
+  @extend .body;
+  @extend .pane;
+
+  min-height: 100vh
+}
+
+::selection {
+  background: hsla(var(--hsl), 0.5);
+  color: hsla(var(--pos), 1);
+  opacity: 1;
+}
+

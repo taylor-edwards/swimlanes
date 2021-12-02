@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { StoreProvider } from '../store'
 import CacheHandler from '../components/CacheHandler'
 import UndoRedoHandler from '../components/UndoRedoHandler'

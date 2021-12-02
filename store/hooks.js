@@ -77,3 +77,8 @@ export const useUndoRedo = () => useLens(
   actions.undo,
   actions.redo,
 )
+
+export const useTheme = () => useLens(
+  selectors.selectedTheme,
+  actions.setTheme,
+)

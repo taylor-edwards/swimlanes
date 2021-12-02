@@ -1,0 +1,74 @@
+@import "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Alegreya&family=Montserrat+Alternates:wght@500&display=swap";
+
+.memphis {
+  --body-font-family: 'Alegreya', serif;
+  --body-font-size: 20px;
+  --body-font-weight: 400;
+  --body-line-height: 26px;
+
+  --heading-font-family: 'Playfair Display', serif;
+  --heading-font-size: 30px;
+  --heading-font-style: italic;
+  --heading-font-weight: 700;
+  --heading-line-height: 1.1;
+
+  --caption-font-family: 'Monsterrat Alternates', sans-serif;
+  --caption-font-size: 14px;
+  --caption-font-weight: 500;
+  --caption-letter-spacing: 0.06em;
+  --caption-text-transform: uppercase;
+  --caption-alpha: 0.7;
+
+  --emphasis-font-family: 'Monsterrat Alternates', sans-serif;
+  --emphasis-font-size: 14px;
+  --emphasis-font-weight: 500;
+  --emphasis-letter-spacing: 0.03em;
+  --emphasis-line-height: 23px;
+}
+
+.memphis .pane,
+.memphis.light .pane {
+  background: url('/memphis-colorful.png');
+  color: hsla(var(--hue), 85%, 9%, var(--stroke-alpha));
+}
+
+.memphis .caption,
+.memphis.light .caption {
+  color: hsl(var(--hue), 60%, 30%);
+}
+
+.memphis.dark .pane {
+  background:
+    linear-gradient(hsla(var(--neg), 0.75), hsla(var(--neg), 0.75)),
+    linear-gradient(hsl(var(--pos)), hsl(var(--pos))),
+    linear-gradient(hsla(var(--neg), 0.3), hsla(var(--neg), 0.3)),
+    url('/memphis-colorful.png');
+  background-blend-mode: color, difference, color-burn;
+  color: hsla(var(--pos), var(--stroke-alpha));
+}
+
+.memphis .card {
+  background: hsla(var(--pos), var(--fill-alpha));
+  box-shadow: 0 5px 10px -7px hsla(var(--hue), 100%, 0%, 0.5);
+  color: hsla(var(--neg), var(--stroke-alpha));
+}
+
+.memphis.dark .caption {
+  color: hsl(var(--hue), 60%, 70%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .memphis .pane {
+    background:
+      linear-gradient(hsla(var(--neg), 0.75), hsla(var(--neg), 0.75)),
+      linear-gradient(hsl(var(--pos)), hsl(var(--pos))),
+      linear-gradient(hsla(var(--neg), 0.3), hsla(var(--neg), 0.3)),
+      url('/memphis-colorful.png');
+    background-blend-mode: color, difference, color-burn;
+    color: hsla(var(--pos), var(--stroke-alpha));
+  }
+
+  .memphis .caption {
+    color: hsl(var(--hue), 60%, 70%);
+  }
+}

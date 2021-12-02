@@ -1,0 +1,52 @@
+:root {
+  --fill-a: tomato;
+  --text-a: black;
+
+  --fill-b: wheat;
+  --text-b: black;
+
+  --fill-c: navy;
+  --text-c: white;
+
+  --fill-d: gold;
+  --text-d: black;
+}
+
+body,
+p {
+  margin: 0;
+}
+
+.pane {
+  /*clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);*/
+  clip-path: path('m 0,5 c 0,0 16.256706,-4.93543379 25,-5 8.743294,-0.0645666 25,5 25,5 0,0 16.746503,4.937133 25,5 8.253497,0.06287 25,-5 25,-5 v 95 H 0 Z');
+  height: 100vh;
+}
+
+.pane--content {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.pane:nth-child(4n + 1) {
+  background: var(--fill-a);
+  color: var(--text-a);
+}
+
+.pane:nth-child(4n + 2) {
+  background: var(--fill-b);
+  color: var(--text-b);
+}
+
+.pane:nth-child(4n + 3) {
+  background: var(--fill-c);
+  color: var(--text-c);
+}
+
+.pane:nth-child(4n + 4) {
+  background: var(--fill-d);
+  color: var(--text-d);
+}

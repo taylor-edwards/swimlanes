@@ -1,53 +1,53 @@
-.btn {
-  border-radius: 3px;
-  cursor: pointer;
-  letter-spacing: 0.03em;
-  padding: 7px 20px 8px;
-  outline: 0;
-  white-space: nowrap;
-}
+// .btn {
+//   border-radius: 3px;
+//   cursor: pointer;
+//   letter-spacing: 0.03em;
+//   padding: 7px 20px 8px;
+//   outline: 0;
+//   white-space: nowrap;
+// }
 
-.btn:disabled {
-  cursor: not-allowed;
-}
+// .btn:disabled {
+//   cursor: not-allowed;
+// }
 
-.btn:not(:disabled):hover,
-.btn:not(:disabled):focus {
-  background: #f05337;
-  color: white;
-}
+// .btn:not(:disabled):hover,
+// .btn:not(:disabled):focus {
+//   background: #f05337;
+//   color: white;
+// }
 
-.default {
-  background: #efefef;
-  border: 1px solid #ff6347;
-  color: black;
-}
+// .default {
+//   background: #efefef;
+//   border: 1px solid #ff6347;
+//   color: black;
+// }
 
-.default:disabled {
-  border-color: #efefef;
-}
+// .default:disabled {
+//   border-color: #efefef;
+// }
 
-.emphasis {
-  background: #ff6347;
-  color: white;
-}
+// .emphasis {
+//   background: #ff6347;
+//   color: white;
+// }
 
-.slim,
-.pill {
-  padding: 3px 12px 4px;
-}
+// .slim,
+// .pill {
+//   padding: 3px 12px 4px;
+// }
 
-.pill {
-  background: #e0e0e0;
-  border-radius: 100px;
-}
+// .pill {
+//   background: #e0e0e0;
+//   border-radius: 100px;
+// }
 
-.active {
-  background: #6a90ff;
-  color: white;
-}
+// .active {
+//   background: #6a90ff;
+//   color: white;
+// }
 
-.active:not(:disabled):hover,
-.active:not(:disabled):focus {
-  background: #88abff;
-}
+// .active:not(:disabled):hover,
+// .active:not(:disabled):focus {
+//   background: #88abff;
+// }
