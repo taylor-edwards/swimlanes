@@ -18,7 +18,9 @@
 }
 
 .pressed {
-  --tone: 32, 32, 32;
+  background-color: rgba(var(--tone), 0.15);
+  border-color: rgba(var(--tone), 0.3);
+  border-bottom-color: rgba(var(--tone), 0.45);
 }
 
 @media (min-width: 768px) {

@@ -22,3 +22,5 @@ export const dragAndDrop = state => state.dragAndDrop
 export const lastExport = state => state.lastExport
 
 export const undoRedo = state => state.undoRedo
+
+export const theme = state => state.theme
