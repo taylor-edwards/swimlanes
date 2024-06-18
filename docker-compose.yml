@@ -3,5 +3,13 @@ version: '3'
 services:
   swimlanes:
     build: .
-    ports:
-      - '8081:3000'
+    networks:
+      - caddy
+    labels:
+      caddy: swimlanes.motoroco.co
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+    restart: unless-stopped
+
+networks:
+  caddy:
+    external: true
