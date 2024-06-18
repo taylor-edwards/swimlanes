@@ -3,13 +3,13 @@ import { useDragAndDrop } from '../store'
 import { noop } from '../util'
 import styles from '../styles/Draggable.module.scss'
 
-const DropZone = forwardRef(({
+const DropZone = forwardRef(function DropZone({
   children,
   className = '',
   label = 'Drop here',
   onDrop = noop,
   type,
-}, zoneElement) => {
+}, zoneElement) {
   const [zoneRect, setZoneRect] = useState({
     bottom: 0,
     left: 0,
